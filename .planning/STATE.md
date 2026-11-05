@@ -2,17 +2,17 @@
 
 ## Current Position
 
-Phase: Phase 7 — Live Product Preview Simulator
-Plan: Complete (2/2 plans executed and verified)
-Status: Phase 7 Complete ✓ — Ready for Phase 8
-Last activity: 2026-11-06 — Executed and verified both plans in Phase 7
+Phase: Phase 8 — Dark-Themed Marketing Landing Page
+Plan: Executing Wave 1 (08-01-PLAN.md)
+Status: In Progress — Building marketing route group layout, sticky header, and footer
+Last activity: 2026-11-06 — Planned Phase 8 and initiated execution
 
 ---
 
 ## Current Status
 - **Current Milestone**: v2.0 — Application Foundation & Landing Page
-- **Current Phase**: Phase 7 Complete -> Ready for Phase 8 (Dark-Themed Marketing Landing Page)
-- **Phase Status**: Phase 7 Verified (Production Build & Firewall Pass)
+- **Current Phase**: Phase 8 (Dark-Themed Marketing Landing Page)
+- **Phase Status**: In Progress (Executing Plan 08-01)
 - **Last Updated**: 2026-11-06
 
 ---
