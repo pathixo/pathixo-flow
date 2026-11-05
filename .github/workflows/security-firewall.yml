@@ -1,0 +1,98 @@
+name: WhatsApp & Financial Security Firewall
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  meta-and-credential-firewall:
+    name: Meta & Provider Credential Leak Interceptor
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Scan for Leaked Meta & Provider Credentials
+        shell: bash
+        run: |
+          echo "Scanning code and fixtures for Meta Cloud API and provider secrets..."
+          VIOLATIONS=0
+
+          # 1. Meta / Facebook Graph API System User Tokens (starts with EAA...)
+          META_TOKENS=$(grep -rnEI --exclude-dir={.git,node_modules} "EAA[A-Za-z0-9]{30,}" . || true)
+          if [ -n "$META_TOKENS" ]; then
+            echo "::error::CRITICAL SECURITY ALERT: Potential Meta Access Token detected in source:"
+            echo "$META_TOKENS"
+            VIOLATIONS=1
+          fi
+
+          # 2. Resend API Keys (starts with re_...)
+          RESEND_KEYS=$(grep -rnEI --exclude-dir={.git,node_modules} "re_[A-Za-z0-9]{24,}" . || true)
+          if [ -n "$RESEND_KEYS" ]; then
+            echo "::error::CRITICAL SECURITY ALERT: Potential Resend API Key detected:"
+            echo "$RESEND_KEYS"
+            VIOLATIONS=1
+          fi
+
+          # 3. AWS Access Key IDs (starts with AKIA...)
+          AWS_KEYS=$(grep -rnEI --exclude-dir={.git,node_modules} "AKIA[0-9A-Z]{16}" . || true)
+          if [ -n "$AWS_KEYS" ]; then
+            echo "::error::CRITICAL SECURITY ALERT: Potential AWS Access Key ID detected:"
+            echo "$AWS_KEYS"
+            VIOLATIONS=1
+          fi
+
+          # 4. WhatsApp Webhook Verify Token hardcodes
+          WEBHOOK_TOKENS=$(grep -rnEI --exclude-dir={.git,node_modules} "(verify_token|VERIFY_TOKEN)\s*=\s*['\"][a-zA-Z0-9_-]{8,}['\"]" . || true)
+          if [ -n "$WEBHOOK_TOKENS" ]; then
+            echo "::error::CRITICAL SECURITY ALERT: Hardcoded Webhook Verify Token detected:"
+            echo "$WEBHOOK_TOKENS"
+            VIOLATIONS=1
+          fi
+
+          if [ $VIOLATIONS -eq 1 ]; then
+            echo "::error::Credential Leak Firewall Failed. Ensure all tokens are injected via runtime environment variables."
+            exit 1
+          fi
+          echo "✓ Zero Meta, AWS, or provider secrets detected in repository."
+
+  whatsapp-compliance-and-privacy:
+    name: WhatsApp Policy Compliance & Privacy Invariants
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify Real Phone Numbers Are Excluded From Repository
+        shell: bash
+        run: |
+          echo "Checking test fixtures and source for non-mock phone numbers..."
+          # Real international numbers (+91 followed by standard 10 digit mobile starting with 6-9)
+          REAL_NUMBERS=$(grep -rnEI --exclude-dir={.git,node_modules} "\+91[6-9][0-9]{9}" . || true)
+          if [ -n "$REAL_NUMBERS" ]; then
+            echo "::error::PRIVACY VIOLATION: Live international phone number found in source/fixtures:"
+            echo "$REAL_NUMBERS"
+            echo "Please use reserved test numbers (e.g. +15550100 through +15550199)."
+            exit 1
+          fi
+          echo "✓ Privacy check passed: zero live phone numbers in repository."
+
+      - name: Audit Rate Card & Pricing Decoupling
+        shell: bash
+        run: |
+          echo "Verifying financial ledger decoupling (no hardcoded pricing in workflows)..."
+          # Check for hardcoded per-message rates in workflow files
+          HARDCODED_RATES=$(grep -rnEI --exclude-dir={.git,node_modules,.planning} "0\.8631|0\.1150" apps/ 2>/dev/null || true)
+          if [ -n "$HARDCODED_RATES" ]; then
+            echo "::error::FINANCIAL LEDGER VIOLATION: Hardcoded Meta message rates found in apps/:"
+            echo "$HARDCODED_RATES"
+            echo "Rates must be consumed dynamically from @pathixo/billing-core versioned rate cards."
+            exit 1
+          fi
+          echo "✓ Financial ledger check passed: pricing is properly decoupled."

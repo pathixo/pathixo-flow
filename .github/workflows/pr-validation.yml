@@ -1,4 +1,4 @@
-name: PR Title & Invariant Checks
+name: PR Quality & Security Checklist Gate
 
 on:
   pull_request:
@@ -31,3 +31,38 @@ jobs:
             chore
             revert
           requireScope: false
+
+  validate-pr-checklist:
+    name: Enforce Mandatory Security & Compliance Checkboxes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Audit PR Body Checkboxes
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || '';
+            const requiredChecks = [
+              'Zero Credential Leaks',
+              'WhatsApp Business Policy Compliance',
+              'Idempotency Guard',
+              'Financial Metering Attribution'
+            ];
+            
+            const unchecked = [];
+            for (const check of requiredChecks) {
+              // Regex matching [x] followed by the item title (case-insensitive)
+              const regex = new RegExp(`\\[[xX]\\][\\s\\*]*${check}`, 'i');
+              if (!regex.test(body)) {
+                unchecked.push(check);
+              }
+            }
+            
+            if (unchecked.length > 0) {
+              core.setFailed(
+                `PR Blocked: The following mandatory security & policy checkboxes are unchecked in the PR description:\n- ` +
+                unchecked.join('\n- ') +
+                `\n\nPlease verify these items and check them in the PR description before requesting review.`
+              );
+            } else {
+              core.info('✓ All mandatory security and compliance checks are verified by PR author.');
+            }
