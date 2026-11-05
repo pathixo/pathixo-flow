@@ -1,0 +1,58 @@
+name: Repository Integrity & Baseline Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-repository-structure:
+    name: Validate Core Files & Disallowed Patterns
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify Essential Repository Inception Files
+        shell: bash
+        run: |
+          echo "Checking presence of foundational documentation..."
+          MISSING=0
+          for file in "README.md" "CONTRIBUTING.md" "CODE_OF_CONDUCT.md" ".gitignore" ".planning/PROJECT.md" ".planning/REQUIREMENTS.md" ".planning/ROADMAP.md"; do
+            if [ ! -f "$file" ]; then
+              echo "Error: Required file '$file' is missing!"
+              MISSING=1
+            else
+              echo "✓ Found $file"
+            fi
+          done
+          if [ $MISSING -eq 1 ]; then
+            exit 1
+          fi
+
+      - name: Guard Against Committed Secrets & Private Keys
+        shell: bash
+        run: |
+          echo "Scanning for accidentally committed sensitive file extensions..."
+          FORBIDDEN=$(find . -not -path '*/.*' -type f \( -name "*.pem" -o -name "*.key" -o -name "*.p12" -o -name "*.crt" -o -name ".env" -o -name ".env.local" -o -name ".env.production" \))
+          if [ -n "$FORBIDDEN" ]; then
+            echo "Critical Security Failure: Unencrypted credential/key files detected:"
+            echo "$FORBIDDEN"
+            exit 1
+          else
+            echo "✓ Zero sensitive key/env files detected."
+          fi
+
+      - name: Check JSON Specification Files
+        shell: bash
+        run: |
+          echo "Validating syntax of repository JSON configuration files..."
+          for jsonfile in $(find .planning -name "*.json" 2>/dev/null); do
+            python3 -m json.tool "$jsonfile" > /dev/null
+            echo "✓ Validated $jsonfile"
+          done
