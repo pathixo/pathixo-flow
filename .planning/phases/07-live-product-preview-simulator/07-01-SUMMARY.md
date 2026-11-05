@@ -24,3 +24,4 @@
 
 - 100% SVG/DOM primitives with zero raster image dependencies.
 - Zero firewall regex collisions (safe dummy phone numbers and sanitized tokens).
+

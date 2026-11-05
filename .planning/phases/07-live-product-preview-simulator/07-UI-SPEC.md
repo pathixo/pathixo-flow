@@ -46,3 +46,4 @@
   - `Duplicate Replay Guard`: Demonstrates instant duplicate suppression at Stage 2.
   - `Payload Inspection`: Expands formatted code inspector in Geist Mono.
 - Transitions: Snappy $\le 150\text{ms}$ CSS-first transitions.
+

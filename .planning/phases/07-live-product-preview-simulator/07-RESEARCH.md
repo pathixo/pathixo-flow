@@ -57,3 +57,4 @@ ProductPreviewSimulator (Client Component)
 - **Desktop ($\ge 1024\text{px}$)**: Full 2-column or 3-column operational layout with interactive tabs and telemetry footer.
 - **Tablet ($768\text{px} - 1023\text{px}$)**: Stacked pipeline steps with collapsible inspection panels.
 - **Mobile ($<768\text{px}$)**: Compact card view with swipeable/tabbed stages, preserving 100% readability without horizontal overflow.
+
