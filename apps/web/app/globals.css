@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@import "@pathixo/design-tokens/css";
+
+@theme inline {
+  --color-canvas: rgb(var(--color-canvas) / <alpha-value>);
+  --color-surface: rgb(var(--color-surface) / <alpha-value>);
+  --color-surface-subtle: rgb(var(--color-surface-subtle) / <alpha-value>);
+  --color-surface-elevated: rgb(var(--color-surface-elevated) / <alpha-value>);
+  --color-border: rgb(var(--color-border) / <alpha-value>);
+  --color-border-subtle: rgb(var(--color-border-subtle) / <alpha-value>);
+  --color-text-primary: rgb(var(--color-text-primary) / <alpha-value>);
+  --color-text-secondary: rgb(var(--color-text-secondary) / <alpha-value>);
+  --color-text-muted: rgb(var(--color-text-muted) / <alpha-value>);
+  --color-brand: rgb(var(--color-brand) / <alpha-value>);
+  --color-brand-hover: rgb(var(--color-brand-hover) / <alpha-value>);
+  --color-brand-subtle: rgb(var(--color-brand-subtle) / <alpha-value>);
+  --color-success: rgb(var(--color-success) / <alpha-value>);
+  --color-success-bg: rgb(var(--color-success-bg) / <alpha-value>);
+  --color-warning: rgb(var(--color-warning) / <alpha-value>);
+  --color-warning-bg: rgb(var(--color-warning-bg) / <alpha-value>);
+  --color-danger: rgb(var(--color-danger) / <alpha-value>);
+  --color-danger-bg: rgb(var(--color-danger-bg) / <alpha-value>);
+
+  --radius-sm: var(--radius-sm, 2px);
+  --radius-md: var(--radius-md, 4px);
+  --radius-lg: var(--radius-lg, 6px);
+
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), "JetBrains Mono", Menlo, monospace;
+}
+
