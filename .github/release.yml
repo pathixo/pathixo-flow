@@ -1,0 +1,42 @@
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+      - chore
+    authors:
+      - dependabot[bot]
+  categories:
+    - title: "🔒 Security, Policy & Compliance"
+      labels:
+        - security
+        - compliance
+    - title: "🚀 New Features & Capabilities"
+      labels:
+        - feat
+        - enhancement
+    - title: "🐛 Bug Fixes & Reliability"
+      labels:
+        - bug
+        - fix
+    - title: "💳 Financial Metering & Billing Ledger"
+      labels:
+        - billing
+        - finance
+    - title: "📱 WhatsApp Business Integration"
+      labels:
+        - whatsapp
+    - title: "📧 Email Automation Service"
+      labels:
+        - email
+    - title: "🏗️ Architecture, Core Primitives & Contracts"
+      labels:
+        - architecture
+        - core
+    - title: "📚 Documentation & Runbooks"
+      labels:
+        - docs
+        - documentation
+    - title: "⚙️ CI/CD & Maintenance"
+      labels:
+        - ci
+        - dependencies
