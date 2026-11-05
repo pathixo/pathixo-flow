@@ -1,0 +1,66 @@
+name: "🐛 Bug Report"
+description: "File an actionable bug report with reproduction steps"
+title: "[BUG]: <short description>"
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue in **Pathixo Flow**! Please ensure no production credentials, client secrets, or sensitive recipient data are included in this report.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component / Service
+      description: Which area or application does this bug impact?
+      options:
+        - apps/whatsapp-automation
+        - apps/email-automation
+        - packages/automation-contracts
+        - packages/configuration
+        - packages/queue
+        - packages/retry
+        - packages/billing-core
+        - packages/observability
+        - packages/testing
+        - deployment / infrastructure
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: What happened unexpectedly?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Concrete steps or commands to reproduce the issue.
+      placeholder: |
+        1. Start application with '...'
+        2. Post webhook event with payload '...'
+        3. Observe failure or unexpected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should have happened according to PRD / specifications?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Sanitized Logs / Output
+      description: Paste relevant structured logs or stack traces (ensure secrets are redacted).
+      render: shell
+  - type: checkboxes
+    id: security_check
+    attributes:
+      label: Security & Invariant Check
+      options:
+        - label: I have verified that no API keys, tokens, or client PII are present in this report.
+          required: true

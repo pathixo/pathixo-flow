@@ -1,0 +1,56 @@
+# Dependencies & Package Managers
+node_modules/
+.pnpm-store/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Production & Build Outputs
+dist/
+build/
+out/
+.turbo/
+*.tsbuildinfo
+
+# Environment & Secrets (CRITICAL: NEVER COMMIT)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.crt
+id_rsa
+credentials.json
+service-account*.json
+
+# Logs & Runtime State
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Database & Persistent Volumes
+data/
+*.sqlite
+*.sqlite3
+*.db
+pgdata/
+
+# OS & Editor Specific
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.sublime-project
+*.sublime-workspace
+
+# Test & Coverage Outputs
+coverage/
+.nyc_output/
+*.lcov

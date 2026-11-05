@@ -1,0 +1,51 @@
+name: "✨ Feature / Enhancement Proposal"
+description: "Propose a new capability or architectural improvement"
+title: "[FEAT]: <short description>"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please consult the **PRD v1.0** and **Financial Planning** documents before proposing major new abstractions. Pathixo Flow favors proven repeated client needs over speculative frameworks.
+  - type: dropdown
+    id: category
+    attributes:
+      label: Proposal Category
+      options:
+        - WhatsApp Channel Feature
+        - Email Channel Feature
+        - Shared Queue / Reliability Primitive
+        - Billing Ledger / Financial Metering
+        - Observability & Monitoring
+        - Client Delivery & Deployment Tooling
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement / Business Justification
+      description: What client problem or delivery bottleneck does this solve?
+      placeholder: Describe the concrete use case or requirement.
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: Proposed Solution / Design
+      description: Technical description of the suggested change.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative implementations or why existing configurations cannot solve this.
+  - type: checkboxes
+    id: alignment
+    attributes:
+      label: Architectural Alignment
+      options:
+        - label: This proposal preserves independent application deployability.
+          required: true
+        - label: This proposal accounts for idempotency and usage cost attribution.
+          required: true

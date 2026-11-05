@@ -1,0 +1,14 @@
+{
+  "project": "Pathixo Flow",
+  "version": "1.0.0",
+  "archetype": "internal-automation-delivery-platform",
+  "channels": ["whatsapp", "email"],
+  "deliveryModel": "deployment-per-client-or-isolated-tenancy",
+  "planningStrategy": "gsd-phased-execution",
+  "financialModel": {
+    "priority": "P0-foundation",
+    "meteringAtFoundation": true,
+    "passThroughRule": "never-unlimited-low-fixed-price"
+  }
+}
+
