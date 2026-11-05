@@ -7,7 +7,7 @@
 - [x] Map PRD and Financial requirements matrix (`.planning/REQUIREMENTS.md`).
 - [x] Establish Phased Execution Roadmap (`.planning/ROADMAP.md`).
 - [x] Configure CI workflows, security firewalls, and 4x/day scheduled scans (`.github/workflows/`).
-- [x] Establish High-Level Technical Specifications (`docs/PRD.md`, `ARCHITECTURE.md`, `TECHNICAL_SPECIFICATION.md`, `DECISION.md`, `SCOPE.md`).
+- [x] Establish High-Level Technical Specifications (`docs/PRD.md`, `ARCHITECTURE.md`, `SPEC.md`, `DECISION.md`, `SCOPE.md`).
 - [x] Author Enforceable Engineering Rules (`docs/RULES.md`).
 - [x] Rebuild Production Design Specifications (`docs/DESIGN.md`).
 - [ ] Initialize root monorepo tooling (`package.json`, `pnpm-workspace.yaml`, `tsconfig.json`).

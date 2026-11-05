@@ -103,3 +103,4 @@ export interface EmailProvider {
   parseEventWebhook(body: unknown): NormalizedEmailEvent;
 }
 ```
+
