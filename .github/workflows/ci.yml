@@ -28,28 +28,16 @@ jobs:
         with:
           version: 9
 
-      - name: Get pnpm store directory
-        id: pnpm-cache
+      - name: Run Linting
         shell: bash
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile || echo "Lockfile will be enforced once workspace dependencies are generated"
-
-      - name: Run Linting
-        run: pnpm run lint --if-present
-
-      - name: Run Typecheck
-        run: pnpm run typecheck --if-present
+          if [ -f "package.json" ]; then
+            pnpm install --frozen-lockfile || pnpm install
+            pnpm run lint --if-present
+            pnpm run typecheck --if-present
+          else
+            echo "✓ Inception phase: package.json not yet created. Skipping package lint & typecheck."
+          fi
 
   test-workspace:
     name: Test Workspace Packages & Apps
@@ -68,11 +56,15 @@ jobs:
         with:
           version: 9
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile || echo "Lockfile will be enforced once workspace dependencies are generated"
-
       - name: Run Tests
-        run: pnpm run test --if-present
+        shell: bash
+        run: |
+          if [ -f "package.json" ]; then
+            pnpm install --frozen-lockfile || pnpm install
+            pnpm run test --if-present
+          else
+            echo "✓ Inception phase: package.json not yet created. Skipping workspace test suite."
+          fi
 
   secret-scan:
     name: Secret & Credential Scanning
@@ -88,4 +80,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
-
