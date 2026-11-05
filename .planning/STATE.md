@@ -1,10 +1,19 @@
 # Pathixo Flow - Project State & Memory
 
+## Current Position
+
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-11-06 — Milestone v2.0 started
+
+---
+
 ## Current Status
-- **Current Milestone**: Milestone 1 - Platform Inception & Technical Foundations
-- **Current Phase**: Phase 0 - Technical Decisions (ADRs) & Monorepo Foundation
-- **Phase Status**: In Progress (Inception Phase)
-- **Last Updated**: 2026-11-05
+- **Current Milestone**: v2.0 — Application Foundation & Landing Page
+- **Current Phase**: Requirements Definition
+- **Phase Status**: Planning
+- **Last Updated**: 2026-11-06
 
 ---
 
@@ -14,8 +23,12 @@
 | :--- | :---: | :--- |
 | **Project Identity & Scope** | **Complete** | Standalone automation delivery platform (WhatsApp & Email). Clean slate, 100% derived from PRD v1.0 & Financial Plan v1.0. |
 | **Traceable Requirements** | **Complete** | Documented in `.planning/REQUIREMENTS.md` with P0/P1/P2 priorities. |
-| **Phased Roadmap** | **Complete** | Documented in `.planning/ROADMAP.md` covering Phase 0 to Phase 5. |
-| **Phase 0 ADRs** | **Pending** | Next up: Drafting ADRs for Language/Runtime, ORM, Queue, Client Isolation, and Providers. |
+| **Phased Roadmap (v1.0)** | **Complete** | Documented in `.planning/ROADMAP.md` covering Phase 0 to Phase 5. |
+| **CI/CD & Security** | **Complete** | GitHub Actions pipelines, security firewall, vulnerability scanning, dependabot. |
+| **Governance & Documentation** | **Complete** | README, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, CHANGELOG, SUPPORT, ROADMAP. |
+| **Design Specification** | **Complete** | Comprehensive UI/UX design spec in `docs/DESIGN.md`. |
+| **Technical Specification** | **Complete** | Backend domain entities, provider interfaces in `docs/TECHNICAL_SPECIFICATION.md`. |
+| **v2.0 Requirements** | **In Progress** | Defining scoped requirements for application foundation & landing page. |
 
 ---
 
@@ -25,11 +38,22 @@
 2. **P0 Financial Controls**: Client spend attribution, versioned rate cards, idempotency, and quota checks are foundation requirements (Phase 1), not post-MVP add-ons.
 3. **Application Autonomy**: WhatsApp and Email services must be independently buildable and deployable.
 4. **Client Isolation**: Absolute segregation of credentials, recipient data, logs, and workflow state.
-5. **No Code Without Review**: Scaffolding and application code will only be created after Phase 0 ADRs are finalized and approved.
+5. **Anti-AI-Slop**: No purple gradients, neon glows, glassmorphism, floating blobs, rainbow charts. Enforced per DESIGN.md Section 1.2.
+6. **Dark Theme for Marketing Only**: Public website uses dark theme (Linear aesthetic); authenticated app uses warm neutral light theme.
 
 ---
 
-## Next Steps
-1. Review and approve the `.planning/` baseline artifacts (`PROJECT.md`, `REQUIREMENTS.md`, `ROADMAP.md`).
-2. Draft the 5 fundamental Phase 0 Architecture Decision Records (`docs/decisions/ADR-001` through `ADR-005`).
+## Accumulated Context
 
+### Decisions
+- v1.0 Milestone established project charter, requirements matrix, and phased roadmap
+- Tech stack: TypeScript/Node.js (v22 LTS), pnpm workspaces, Next.js App Router, Tailwind CSS, Radix UI, Lucide Icons
+- Database: PostgreSQL + Drizzle ORM; Queue: Redis + BullMQ (proposed, backend milestone)
+- Design system: Geist Sans typography, 4px grid, terracotta accent for authenticated app, dark theme for marketing
+
+### Blockers
+- None
+
+### Todos
+- Define v2.0 milestone requirements
+- Create v2.0 roadmap with phased execution plan
