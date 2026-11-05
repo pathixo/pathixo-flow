@@ -1,0 +1,68 @@
+name: PR Quality & Security Checklist Gate
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-pr-title:
+    name: Validate Conventional Commit Title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify PR Title format
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+            revert
+          requireScope: false
+
+  validate-pr-checklist:
+    name: Enforce Mandatory Security & Compliance Checkboxes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Audit PR Body Checkboxes
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || '';
+            const requiredChecks = [
+              'Zero Credential Leaks',
+              'WhatsApp Business Policy Compliance',
+              'Idempotency Guard',
+              'Financial Metering Attribution'
+            ];
+            
+            const unchecked = [];
+            for (const check of requiredChecks) {
+              // Regex matching [x] followed by the item title (case-insensitive)
+              const regex = new RegExp(`\\[[xX]\\][\\s\\*]*${check}`, 'i');
+              if (!regex.test(body)) {
+                unchecked.push(check);
+              }
+            }
+            
+            if (unchecked.length > 0) {
+              core.setFailed(
+                `PR Blocked: The following mandatory security & policy checkboxes are unchecked in the PR description:\n- ` +
+                unchecked.join('\n- ') +
+                `\n\nPlease verify these items and check them in the PR description before requesting review.`
+              );
+            } else {
+              core.info('✓ All mandatory security and compliance checks are verified by PR author.');
+            }

@@ -29,15 +29,15 @@ A clear, concise summary of the changes proposed in this pull request.
 - PRD / Requirements ID (e.g. `CORE-001`, `WA-005`, `FIN-001`): 
 - Closes / Fixes Issue: #
 
-## Core Invariant Verification
+## Mandatory Security & Policy Checklist (All Must Be Checked)
 
 - [ ] **Application Isolation**: Changes in one app do not break independent compilation/deployment of the other.
-- [ ] **No Secrets**: No production API keys, tokens, or live credentials committed.
-- [ ] **Idempotency**: External side-effects or webhook handlers include duplicate prevention.
-- [ ] **Financial Attribution**: Outbound billable events emit traceable usage records.
+- [ ] **Zero Credential Leaks**: No Meta System User Tokens (`EAA...`), phone IDs, Resend keys, or secrets are present in code or fixtures.
+- [ ] **WhatsApp Business Policy Compliance**: Workflows verify explicit opt-in/consent before dispatch; out-of-session dispatches use approved templates only; opt-out keywords (`STOP`) are honored.
+- [ ] **Idempotency Guard**: All outbound dispatches and webhook ingestions enforce duplicate prevention via unique idempotency keys.
+- [ ] **Financial Metering Attribution**: Outbound billable events emit traceable usage records with dynamic rate cards from `@pathixo/billing-core`.
 - [ ] **Quality Checks**: Local tests, linting, and typechecks pass (`pnpm run typecheck && pnpm run test`).
 
 ## Testing Performed
 
 Describe the testing performed to verify this change (unit tests, provider fakes, sandbox tests).
-
