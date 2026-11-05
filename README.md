@@ -19,39 +19,7 @@ The platform is **not** a public self-serve SaaS product and **not** a visual dr
 
 ---
 
-## 2. Core Capabilities & Architecture
-
-```mermaid
-graph TD
-    ClientSystems[Client Business Systems: CRM, ERP, Forms, Webhooks] --> Ingress[Ingress & Webhook Verification Layer]
-    
-    subgraph Channel Applications
-        Ingress --> WA[WhatsApp Automation App]
-        Ingress --> EM[Email Automation App]
-    end
-
-    subgraph Shared Platform Primitives
-        WA --> Core[Queue / Worker / Retry / Contracts]
-        EM --> Core
-        Core --> Ledger[Financial Ledger & Metering Core]
-        Core --> Obs[Observability & Correlation IDs]
-    end
-
-    subgraph External Infrastructure
-        WA --> Meta[WhatsApp Business Platform / Cloud API]
-        EM --> SES[Amazon SES / Resend API]
-        Core --> DB[(PostgreSQL + Redis Queue)]
-    end
-```
-
-* **Independently Deployable Applications**: WhatsApp and Email services maintain completely separate runtime containers and deployment lifecycles.
-* **Isolated Client Boundary**: Secrets, credentials, customer data, and operational logs are strictly partitioned per client deployment.
-* **Guaranteed Idempotency**: Persistent duplicate suppression across incoming webhooks and outgoing provider side-effects.
-* **P0 Financial Usage Metering**: Immutable usage tracking by client, provider, market, and date-effective rate cards to ensure zero unbilled usage.
-
----
-
-## 3. Repository Topology
+## 2. Repository Topology
 
 The repository follows a clean monorepo structure designed for independent releases:
 
@@ -77,7 +45,7 @@ pathixo-flow/
 
 ---
 
-## 4. Quickstart & Local Development
+## 3. Quickstart & Local Development
 
 ### Prerequisites
 * **Node.js**: `v20.x` or `v22.x` (LTS)
@@ -117,7 +85,7 @@ pathixo-flow/
 
 ---
 
-## 5. Engineering Invariants & Quality Standards
+## 4. Engineering Invariants & Quality Standards
 
 * **Zero Committed Secrets**: Production credentials, provider API keys, and client secrets must never be committed to Git.
 * **Validated Configuration**: Startup fails immediately if required configuration variables are missing or malformed.
@@ -126,7 +94,7 @@ pathixo-flow/
 
 ---
 
-## 6. Documentation & Governance
+## 5. Documentation & Governance
 
 * **[Contributing Guidelines](CONTRIBUTING.md)**: Monorepo workflow, branch naming, PR conventions, and code review rules.
 * **[Code of Conduct](CODE_OF_CONDUCT.md)**: Professional standards and collaboration guidelines.
@@ -136,7 +104,7 @@ pathixo-flow/
 
 ---
 
-## 7. License & Ownership
+## 6. License & Ownership
 
 Copyright © 2026 **Pathixo Pvt. Ltd.** All rights reserved.  
 This software, documentation, and tooling are proprietary to Pathixo Pvt. Ltd. Unauthorized distribution or copying is strictly prohibited.
