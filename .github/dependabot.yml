@@ -28,3 +28,4 @@ updates:
       - "security"
     commit-message:
       prefix: "ci(actions)"
+
