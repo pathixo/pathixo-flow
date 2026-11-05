@@ -1,0 +1,55 @@
+name: Release Drafter & Notes Publisher
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  draft-or-publish-release:
+    name: Generate & Publish Release Notes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate Release Notes
+        id: release-notes
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = context.ref.startsWith('refs/tags/') ? context.ref.replace('refs/tags/', '') : 'v0.1.0-alpha';
+            core.info(`Generating release notes for ${tag}...`);
+            
+            try {
+              const response = await github.rest.repos.generateReleaseNotes({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: tag
+              });
+              
+              core.setOutput('name', response.data.name);
+              core.setOutput('body', response.data.body);
+            } catch (err) {
+              core.warning(`Could not auto-generate release notes via API: ${err.message}`);
+              core.setOutput('name', tag);
+              core.setOutput('body', `Automated release notes for ${tag}. See CHANGELOG.md for details.`);
+            }
+
+      - name: Create or Update GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: ${{ steps.release-notes.outputs.name }}
+          body: ${{ steps.release-notes.outputs.body }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

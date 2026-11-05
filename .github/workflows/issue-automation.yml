@@ -1,0 +1,239 @@
+name: Failure Triage & Issue Automation
+
+# Auto-creates or updates a GitHub Issue when any CI or security pipeline fails,
+# so failed runs become tracked work items instead of silent Actions-tab noise.
+#
+# NOTE: `workflow_run` events only fire for workflows registered on the default
+# branch (main). After this file is merged to main, the automation activates.
+
+on:
+  workflow_run:
+    workflows:
+      - "WhatsApp & Financial Security Firewall"
+      - "Continuous Security & Vulnerability Scan (4x Daily)"
+      - "Repository Integrity & Baseline Checks"
+      - "CI Pipeline"
+    types: [completed]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.id }}
+  cancel-in-progress: false
+
+permissions:
+  actions: read
+  issues: write
+
+jobs:
+  triage-failure:
+    name: Create / Update Failure Tracking Issue
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.workflow_run.conclusion == 'failure' ||
+      github.event.workflow_run.conclusion == 'timed_out'
+    steps:
+      - name: Generate or update failure issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            if (!run) {
+              core.info('No workflow_run payload present; nothing to do.');
+              return;
+            }
+
+            core.info(`Workflow '${run.name}' concluded with '${run.conclusion}' (run #${run.run_number}).`);
+
+            // ----------------------------------------------------------------
+            // Severity classification
+            // ----------------------------------------------------------------
+            const SECURITY_WORKFLOWS = new Set([
+              'WhatsApp & Financial Security Firewall',
+              'Continuous Security & Vulnerability Scan (4x Daily)',
+            ]);
+            const LABELS_BY_WORKFLOW = {
+              'Continuous Security & Vulnerability Scan (4x Daily)': ['ci-failure', 'dependencies'],
+            };
+            const BASE_LABELS = ['ci-failure', 'triage'];
+
+            const isSecurity = SECURITY_WORKFLOWS.has(run.name);
+            const titlePrefix = isSecurity ? '[CI][SEC]' : '[CI]';
+            let labels;
+            if (isSecurity) {
+              labels = ['security', 'P0', 'ci-failure'].concat(
+                (LABELS_BY_WORKFLOW[run.name] || []).filter((l) => l !== 'ci-failure')
+              );
+            } else {
+              labels = BASE_LABELS.slice();
+            }
+            // ----------------------------------------------------------------
+            // Label repository-local labels exist before use
+            // ----------------------------------------------------------------
+            const LABEL_META = {
+              security:   { color: 'd93f0b', description: 'Security-relevant failure (leak, scan, or compliance)' },
+              'ci-failure': { color: 'e99695', description: 'A CI pipeline failed on a recent run' },
+              P0:         { color: 'b60205', description: 'Drop-everything priority per .planning/STATE.md' },
+              triage:     { color: 'fbca04', description: 'Needs verification and impact assessment' },
+              dependencies: { color: '0366d6', description: 'Dependency / CVE related work' },
+            };
+            for (const [label, meta] of Object.entries(LABEL_META)) {
+              if (!labels.includes(label)) continue;
+              try {
+                await github.rest.issues.getLabel({
+                  owner: context.repo.owner, repo: context.repo.repo, name: label,
+                });
+              } catch {
+                try {
+                  await github.rest.issues.createLabel({
+                    owner: context.repo.owner, repo: context.repo.repo,
+                    name: label, color: meta.color, description: meta.description,
+                  });
+                } catch (err) {
+                  core.warning(`Could not ensure label '${label}': ${err.message}`);
+                }
+              }
+            }
+
+            // ----------------------------------------------------------------
+            // Collect failed jobs (names only when logs unavailable)
+            // ----------------------------------------------------------------
+            let failedJobs = [];
+            try {
+              const jobs = await github.paginate(github.rest.actions.listJobsForWorkflowRun, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: run.id,
+              });
+              failedJobs = jobs.filter(
+                (j) => j.conclusion && !['success', 'skipped', 'cancelled'].includes(j.conclusion)
+              );
+            } catch (err) {
+              core.warning(`Could not list workflow run jobs: ${err.message}`);
+            }
+
+            // ----------------------------------------------------------------
+            // Sanitized log snippets (scrubbed of token-shaped strings)
+            // ----------------------------------------------------------------
+            const sanitize = (text) =>
+              text
+                .replace(/EAA[A-Za-z0-9_-]{10,}/g, '[REDACTED_META_TOKEN]')
+                .replace(/re_[A-Za-z0-9_-]{10,}/g, '[REDACTED_RESEND_KEY]')
+                .replace(/AKIA[0-9A-Z]{10,}/g, '[REDACTED_AWS_KEY]')
+                .replace(/gh[pousr]_[A-Za-z0-9]{20,}/g, '[REDACTED_GITHUB_TOKEN]')
+                .replace(/(Bearer\s+)[A-Za-z0-9._\-=]{8,}/g, '$1[REDACTED]')
+                .replace(/xox[bapos]-[A-Za-z0-9\-]{10,}/g, '[REDACTED_SLACK_TOKEN]');
+
+            const errorLineRegexes = [/##\[error/i, /::error/i, /with exit code/i, /\bECONNREFUSED\b/i];
+            let logSections = '';
+            for (const job of failedJobs.slice(0, 3)) {
+              let snippet = '';
+              try {
+                const resp = await github.rest.actions.downloadJobLogsForWorkflowRun({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  job_id: job.id,
+                });
+                const raw = resp.data;
+                const logText = sanitize(
+                  typeof raw === 'string' ? raw : Buffer.from(raw).toString('utf8')
+                );
+                const lines = logText.split(/\r?\n/);
+                const idx = [];
+                lines.forEach((l, i) => {
+                  if (errorLineRegexes.some((r) => r.test(l))) idx.push(i);
+                });
+                const picked = new Set();
+                for (const i of idx.slice(-40)) {
+                  for (let j = Math.max(0, i - 1); j <= Math.min(lines.length - 1, i + 1); j++) {
+                    picked.add(j);
+                  }
+                }
+                const excerpt = idx.length === 0 ? lines.slice(-40) : [...picked].map((i) => lines[i]);
+                const text = excerpt.length > 0 ? excerpt.join('\n').slice(0, 8000) : '(no error-marker lines found)';
+                snippet = `\n<details><summary>Sanitized log excerpt (error lines, vars scrubbed)</summary>\n\n\`\`\`text\n${text}\n\`\`\`\n\n</details>`;
+              } catch (err) {
+                snippet = `\n<details><summary>Sanitized log excerpt</summary>\n\nLogs for job '${job.name}' could not be retrieved (${err.message}). Inspect the run directly at the link above.\n\n</details>`;
+              }
+              logSections += `\n### ✗ ${job.name}\n**Conclusion:** ${job.conclusion}${snippet}`;
+            }
+            if (!logSections) logSections = '\n_(Job list unavailable; see the run page for details.)_';
+
+            // ----------------------------------------------------------------
+            // Issue body
+            // ----------------------------------------------------------------
+            const ownerLogin = run.actor?.login || run.triggering_actor?.login || 'unknown';
+            const sha = run.head_sha ? run.head_sha.slice(0, 7) : 'unknown';
+            const body = [
+              `## Continuous Failure Report`,
+              ``,
+              `| Field | Value |`,
+              `| :--- | :--- |`,
+              `| **Workflow** | \`${run.name}\` |`,
+              `| **Conclusion** | \`${run.conclusion}\` |`,
+              `| **Run** | [#${run.run_number}](${run.html_url}) |`,
+              `| **Branch / SHA** | \`${run.head_branch}\` @ ${sha} |`,
+              `| **Trigger / Actor** | \`${run.event}\` / @${ownerLogin} |`,
+              `| **Detected** | ${new Date().toISOString()} |`,
+              ``,
+              logSections,
+              ``,
+              `> **Handling guidance:** ${isSecurity
+                ? `**This is a security P0.** Treat as drop-everything per \`.planning/STATE.md\`.`
+                : `Investigate, reproduce, and propose a fix PR when ready.`}`,
+              ``,
+              `_Do not paste real credentials in comment text on this issue; if the failure is a leaked secret, rotate it immediately and never reproduce it here._`,
+              ``,
+              `_Auto-generated by **Failure Triage & Issue Automation**._`,
+            ].join('\n');
+
+            // ----------------------------------------------------------------
+            // Deduplicate: one open tracking issue per failing workflow
+            // ----------------------------------------------------------------
+            const searchTitle = `${titlePrefix} ${run.name}`;
+            const search = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open in:title "${searchTitle}"`,
+              per_page: 1,
+            });
+            const openTracker = search.data.items.find((i) => i.title.startsWith(searchTitle));
+
+            if (openTracker) {
+              core.info(`Existing tracker found: #${openTracker.number} - appending run reference.`);
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: openTracker.number,
+                body: `Re-failed on run [#${run.run_number}](${run.html_url}) (\`${run.conclusion}\`, \`${run.head_branch}\` @ ${sha}, ${new Date().toISOString()}).`,
+              });
+              // Keep labels consistent in case scope changed between failures.
+              if (openTracker.labels.map((l) => (typeof l === 'string' ? l : l.name)).sort().join() !== labels.slice().sort().join()) {
+                await github.rest.issues.setLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: openTracker.number,
+                  labels,
+                });
+              }
+              return;
+            }
+
+            // ----------------------------------------------------------------
+            // Create the tracking issue
+            // ----------------------------------------------------------------
+            const assignees = [];
+            try {
+              const repoMeta = await github.rest.repos.get({
+                owner: context.repo.owner, repo: context.repo.repo,
+              });
+              if (repoMeta.data.owner?.type === 'User') assignees.push(repoMeta.data.owner.login);
+            } catch (err) {
+              core.warning(`Could not resolve repo owner for assignment: ${err.message}`);
+            }
+
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `${searchTitle} (run #${run.run_number})`,
+              body,
+              labels,
+              assignees,
+            });
+            core.info(`Created tracking issue #${issue.data.number}.`);
