@@ -2,7 +2,6 @@ changelog:
   exclude:
     labels:
       - ignore-for-release
-      - chore
     authors:
       - dependabot[bot]
   categories:
@@ -36,8 +35,14 @@ changelog:
       labels:
         - docs
         - documentation
-    - title: "⚙️ CI/CD & Maintenance"
+    - title: "⚙️ CI/CD & Build Infrastructure"
       labels:
         - ci
+        - build
+    - title: "🛠️ Chores & Tooling"
+      labels:
+        - chore
         - dependencies
-
+    - title: "🔍 Other Changes"
+      labels:
+        - "*"
