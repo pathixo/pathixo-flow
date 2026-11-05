@@ -93,3 +93,4 @@ If you identify a potential security issue or credentials leak:
 1. **Do not create a public issue**.
 2. Immediately contact the Technical Lead or email **security@pathixo.com**.
 3. Rotate any compromised credentials immediately.
+
