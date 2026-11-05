@@ -34,3 +34,4 @@
 - **Firewall Guard**: In mock components, use dummy phone ranges (`+15550100`..`+15550199`) and dummy tokens to avoid triggering regex firewalls.
 - **Dual-Theme Isolation**: The dark theme is scoped to `(marketing)` via CSS variables; the authenticated application preserves the warm neutral light theme defined in `docs/DESIGN.md`.
 - **Anti-AI-Slop**: Zero purple/pink gradients, zero neon cyan glows, zero glassmorphism, zero floating blobs. Enforce 4px spacing scale and 2px–6px restrained corner radii.
+

@@ -190,3 +190,4 @@ Relying strictly on Tailwind classes (e.g. `dark:bg-[#0C0E0D] light:bg-[#F7F7F4]
 5. **Phase 4: Route Group Shells & Layouts** (`(marketing)`, `(auth)`, `(app)`)
 6. **Phase 5: Marketing Landing Page & Product Preview**
 7. **Phase 6: Auth & App Placeholders + Quality Gates**
+

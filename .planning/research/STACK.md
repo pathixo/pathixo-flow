@@ -66,3 +66,4 @@ All versions represent current stable releases verified for mutual compatibility
 3. **Heavy State Management**: `redux`, `zustand` — Next.js Server Components and URL search params are sufficient.
 4. **Heavy Animation / 3D Libraries**: `three`, `lottie-react` — prohibited by Anti-AI-slop rules.
 5. **Premature Charting Libraries**: `recharts`, `tremor` — product preview uses semantic DOM/SVG elements.
+

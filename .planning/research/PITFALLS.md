@@ -438,3 +438,4 @@ To satisfy the milestone requirement of a *"product preview component using real
 | **Components** | Radix Portal escapes marketing theme container | Scope portal container or pass theme class to overlay root |
 | **Typography** | Font metrics shift and twitch during real-time metric updates | Enforce `tabular-nums` on all financial and latency data |
 | **Route Groups** | Multiple `<html>`/`<body>` cause full page reload on navigation | Maintain single root `app/layout.tsx`; nest layout wrappers in route groups |
+
