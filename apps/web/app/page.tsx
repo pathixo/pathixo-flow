@@ -8,45 +8,54 @@ import {
   CardDescription,
   CardContent,
   Separator,
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
 } from '@pathixo/ui';
-import { ArrowRight, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
+import { ProductPreviewSimulator } from '../components/preview';
 
 export default function SmokeTestPage() {
   return (
-    <div className="max-w-4xl mx-auto py-12 px-6 space-y-12">
-      <header className="space-y-4">
-        <div className="flex items-center gap-3">
-          <Badge variant="brand">Platform Foundation v2.0</Badge>
-          <StatusBadge status="success" label="All Systems Operational" />
+    <div className="max-w-5xl mx-auto py-12 px-4 sm:px-6 space-y-12">
+      {/* Editorial Header */}
+      <header className="space-y-4 text-center sm:text-left">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+          <Badge variant="brand">Platform Architecture v2.0</Badge>
+          <StatusBadge status="success" label="All Systems Nominal" />
         </div>
-        <h1 className="text-3xl font-semibold tracking-tight text-text-primary">
-          Pathixo Flow Foundation Test
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-text-primary">
+          Automate the work. Stay in control.
         </h1>
-        <p className="text-base text-text-secondary leading-relaxed">
-          Validating monorepo packaging, strict TypeScript compilation, dual-theme
-          design tokens, and accessible Radix UI primitives.
+        <p className="text-base text-text-secondary max-w-2xl leading-relaxed">
+          A unified automation engine for managing WhatsApp, email, and high-reliability
+          workflows. Engineered with persistent idempotency and P0 financial usage metering.
         </p>
       </header>
 
+      {/* Primary Deliverable: Live Synthetic React Product Preview */}
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-semibold tracking-wide uppercase text-text-muted flex items-center gap-2">
+            <Sparkles className="h-3.5 w-3.5 text-brand" />
+            Live Pipeline Architecture Simulator
+          </h2>
+          <span className="text-xs font-mono text-text-muted">Zero Raster Images &bull; 100% SVG/DOM</span>
+        </div>
+        <ProductPreviewSimulator />
+      </section>
+
       <Separator />
 
+      {/* Primitives Smoke Test Section */}
       <section className="space-y-6">
         <h2 className="text-lg font-medium text-text-primary">
-          Component Primitives Verification
+          Foundational Design Primitives & Quality Gates
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Action Components</CardTitle>
+              <CardTitle>CVA Action Components</CardTitle>
               <CardDescription>
-                CVA buttons with 4px radii scale and accessible focus rings.
+                Restrained 4px radii scale, accessible focus rings, and high typographic contrast.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -63,9 +72,9 @@ export default function SmokeTestPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Status & Security Badges</CardTitle>
+              <CardTitle>WCAG 2.2 AA Status Indicators</CardTitle>
               <CardDescription>
-                WCAG 2.2 AA compliant status badges with required icons/indicators.
+                Mandates 6px indicator dots or icons alongside text labels to eliminate color-only communication.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -80,46 +89,6 @@ export default function SmokeTestPage() {
           </Card>
         </div>
       </section>
-
-      <section className="space-y-4">
-        <h2 className="text-lg font-medium text-text-primary">
-          High-Density Data Table
-        </h2>
-        <Card className="overflow-hidden">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Channel</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Latency</TableHead>
-                <TableHead>Attributed Client</TableHead>
-                <TableHead className="text-right">Unit Rate</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">WhatsApp Cloud API</TableCell>
-                <TableCell>
-                  <StatusBadge status="success" label="Delivered" />
-                </TableCell>
-                <TableCell>18ms</TableCell>
-                <TableCell>Acme Corp</TableCell>
-                <TableCell className="text-right">₹0.8631</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Amazon SES</TableCell>
-                <TableCell>
-                  <StatusBadge status="success" label="Sent" />
-                </TableCell>
-                <TableCell>42ms</TableCell>
-                <TableCell>Starlight Inc</TableCell>
-                <TableCell className="text-right">₹0.0083</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Card>
-      </section>
     </div>
   );
 }
-
