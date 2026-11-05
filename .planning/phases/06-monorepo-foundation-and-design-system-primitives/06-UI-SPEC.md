@@ -106,3 +106,4 @@
 - Compact data rows (36px or 44px).
 - Header: 11px uppercase tracking-wider semi-bold, background `var(--surface-subtle)`.
 - Numeric values must use `tabular-nums` font feature.
+

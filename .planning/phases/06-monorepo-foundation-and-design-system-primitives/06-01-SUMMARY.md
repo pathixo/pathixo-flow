@@ -26,3 +26,4 @@
 
 - `pnpm --version` confirmed: `9.15.4`.
 - Workspace manifest and TypeScript base configurations validated.
+

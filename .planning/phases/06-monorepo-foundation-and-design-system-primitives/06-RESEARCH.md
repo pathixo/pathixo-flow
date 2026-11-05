@@ -118,3 +118,4 @@ Flow/
 - **Syntax & Types**: `pnpm -r run typecheck` passes across `packages/design-tokens`, `packages/ui`, and `apps/web`.
 - **Packaging Integrity**: Shared packages import cleanly across workspace boundaries without bundle or compilation errors.
 - **Production Compilation**: `pnpm --filter web build` produces a valid Next.js standalone/optimized build artifact.
+

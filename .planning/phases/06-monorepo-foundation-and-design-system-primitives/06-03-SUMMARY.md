@@ -28,3 +28,4 @@
 
 - All components are 100% token-driven with zero hardcoded hex colors.
 - Anti-AI-slop verified: 2px–6px corner radii, zero purple/pink gradients, zero decorative glassmorphism.
+
