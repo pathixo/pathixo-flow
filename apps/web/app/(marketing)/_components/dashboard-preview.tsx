@@ -403,12 +403,6 @@ export function DashboardPreview() {
           </main>
         </div>
       </div>
-
-      {/* Deep Bottom Gradient Bleed that gracefully dissolves into #08090A */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#08090A] via-[#08090A]/80 to-transparent z-20"
-        aria-hidden="true"
-      />
     </div>
   );
 }
