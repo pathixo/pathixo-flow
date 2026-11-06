@@ -10,7 +10,7 @@ export default function MarketingLayout({
   return (
     <div
       data-theme="dark"
-      className="dark min-h-screen bg-canvas text-text-primary flex flex-col selection:bg-brand selection:text-white antialiased"
+      className="dark min-h-screen bg-[#08090A] text-[#F5F5F5] flex flex-col selection:bg-white selection:text-black antialiased"
     >
       <MarketingHeader />
       <main className="flex-1 flex flex-col">{children}</main>

@@ -29,3 +29,8 @@
   --font-mono: var(--font-geist-mono), "JetBrains Mono", Menlo, monospace;
 }
 
+html, body {
+  background-color: #08090A;
+  color: #F5F5F5;
+}
+
