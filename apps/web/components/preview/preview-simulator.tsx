@@ -130,7 +130,7 @@ export function ProductPreviewSimulator() {
   "idempotency_key": "idemp_msg_88f921a",
   "meta_signature": "sha256=98f12a...valid",
   "billable": true,
-  "rate_unit": "0.8631",
+  "rate_unit": "0.8500",
   "currency": "INR",
   "side_effects_suppressed": ${isDuplicate ? 'true' : 'false'}
 }`}

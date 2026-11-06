@@ -227,7 +227,7 @@ export function DashboardPreview() {
               <div>
                 <h3 className="text-lg font-semibold text-white tracking-tight">Good morning</h3>
                 <p className="text-xs text-[#8A8D96] mt-0.5">
-                  Here's what's happening across your automations today.
+                  Here&apos;s what&apos;s happening across your automations today.
                 </p>
               </div>
 

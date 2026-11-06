@@ -22,7 +22,7 @@ export function LedgerStage({
   clientId = 'cli_acme_corp',
   channel = 'WhatsApp Cloud API',
   category = 'UTILITY',
-  ratePerMsg = '₹0.8631',
+  ratePerMsg = '₹0.8500',
   prepaidBalance = '₹4,892.40',
 }: LedgerStageProps) {
   return (

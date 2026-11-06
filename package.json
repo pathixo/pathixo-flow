@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "pnpm --filter web dev",
     "build": "pnpm -r run build",
-    "lint": "pnpm -r run lint --if-present",
-    "typecheck": "pnpm -r run typecheck --if-present",
+    "lint": "pnpm -r --if-present run lint",
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "test": "pnpm -r --if-present run test",
     "clean": "pnpm -r run clean"
   },
   "devDependencies": {

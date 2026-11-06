@@ -49,7 +49,7 @@ Adding a modern Next.js 14/15 App Router application to a repository that previo
   3. Scans for live Indian phone numbers (`\+91[6-9][0-9]{9}`).
   4. Scans for hardcoded rates (`0.8631` or `0.1150`) in `apps/`.
 * **The Danger**:
-  - If the marketing landing page or product preview component displays a realistic interactive preview of a WhatsApp message or rate card (e.g., `<p>Meta Marketing: ₹0.8631/msg</p>` or `<input value="+919876543210" />`), the CI firewall will immediately fail the PR!
+  - If the marketing landing page or product preview component displays a realistic interactive preview of a WhatsApp message or rate card (e.g., `<p>Meta Marketing: ₹0.8631/msg</p>` or `<input value="+15550199999" />`), the CI firewall will immediately fail the PR!
   - If a mockup displays dummy API keys or verify tokens that match token regexes, the firewall blocks the build.
 
 ### 5. Mandatory PR Checklist Enforcement Gate
