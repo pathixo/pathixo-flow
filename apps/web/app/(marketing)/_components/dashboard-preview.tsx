@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import {
   Search,
@@ -8,18 +10,66 @@ import {
   Mail,
   Layers,
   Users,
-  Settings,
   CheckCircle2,
   TrendingUp,
   ArrowUpRight,
   SlidersHorizontal,
   ChevronDown,
-  Sparkles,
 } from 'lucide-react';
 
 export function DashboardPreview() {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = React.useState({ x: 22, y: 0, z: 0 });
+  const [glare, setGlare] = React.useState({ x: 50, y: 50, opacity: 0 });
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const deltaX = (x - centerX) / centerX; // -1 (left) to 1 (right)
+    const deltaY = (y - centerY) / centerY; // -1 (top) to 1 (bottom)
+
+    // Interactive 3D physical response:
+    // Base pitch is 22deg. Moving mouse down increases tilt slightly; moving up flattens slightly.
+    // Moving mouse to right (deltaX > 0) rotates on Y axis by up to +12deg, tucking the side.
+    // Subtle Z roll gives realistic physical inertia.
+    setTilt({
+      x: 22 - deltaY * 7,
+      y: deltaX * 12,
+      z: deltaX * -1.8,
+    });
+
+    setGlare({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.14,
+    });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setTilt({ x: 22, y: 0, z: 0 });
+    setGlare((prev) => ({ ...prev, opacity: 0 }));
+  };
+
   return (
-    <div className="relative w-full max-w-[1180px] mx-auto [perspective:1200px]">
+    <div
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="relative w-full max-w-[1200px] mx-auto [perspective:1400px] cursor-pointer select-none transition-all duration-300"
+    >
       {/* Specular ambient background glow for depth */}
       <div
         className="pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 w-4/5 h-36 bg-gradient-to-b from-white/10 to-transparent blur-3xl opacity-60 rounded-full"
@@ -28,15 +78,27 @@ export function DashboardPreview() {
 
       {/* 3D Angular Tilt Window Frame */}
       <div
-        className="relative rounded-2xl border-t border-t-white/20 border-x border-x-white/10 border-b border-b-white/5 bg-gradient-to-b from-[#131519] via-[#0E1013] to-[#0A0C0E] shadow-[0_50px_120px_-20px_rgba(0,0,0,0.95),0_0_80px_rgba(255,255,255,0.04)] overflow-hidden font-sans text-xs transition-transform duration-300"
+        className="relative rounded-2xl border-t border-t-white/25 border-x border-x-white/10 border-b border-b-white/5 bg-gradient-to-b from-[#131519] via-[#0E1013] to-[#0A0C0E] shadow-[0_50px_120px_-20px_rgba(0,0,0,0.95),0_0_80px_rgba(255,255,255,0.04)] overflow-hidden font-sans text-xs will-change-transform"
         style={{
-          transform: 'perspective(1100px) rotateX(20deg) scale(0.98)',
+          transform: `perspective(1200px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) rotateZ(${tilt.z}deg) scale(0.98)`,
           transformOrigin: '50% 0%',
+          transition: isHovered
+            ? 'transform 0.08s ease-out'
+            : 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
-        {/* Subtle glass reflection highlight */}
+        {/* Dynamic mouse-following specular glare */}
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.07]"
+          className="pointer-events-none absolute inset-0 z-30 transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,${glare.opacity}) 0%, transparent 60%)`,
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Subtle static glass sheen */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-white/[0.06]"
           aria-hidden="true"
         />
 
@@ -344,7 +406,7 @@ export function DashboardPreview() {
 
       {/* Deep Bottom Gradient Bleed that gracefully dissolves into #08090A */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#08090A] via-[#08090A]/70 to-transparent z-20"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#08090A] via-[#08090A]/80 to-transparent z-20"
         aria-hidden="true"
       />
     </div>

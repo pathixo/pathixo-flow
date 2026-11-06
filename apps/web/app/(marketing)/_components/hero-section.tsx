@@ -5,10 +5,10 @@ import { DashboardPreview } from './dashboard-preview';
 
 export function HeroSection() {
   return (
-    <section className="relative pt-10 pb-16 md:pt-12 md:pb-20 overflow-hidden bg-[#08090A]">
+    <section className="relative pt-12 pb-16 md:pt-16 md:pb-24 overflow-hidden bg-[#08090A]">
       <MarketingContainer>
         {/* Left-Aligned Editorial Headline */}
-        <div className="max-w-3xl space-y-4 text-left mb-8">
+        <div className="max-w-3xl space-y-5 text-left mb-16 md:mb-20">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-white leading-[1.08]">
             Automate the work.
             <br />
@@ -22,7 +22,7 @@ export function HeroSection() {
           </p>
 
           {/* Dual Action Buttons (Left Aligned) */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
             <a href="#cta">
               <button
                 type="button"
@@ -42,10 +42,10 @@ export function HeroSection() {
             </a>
           </div>
         </div>
-
-        {/* Full-bleed 3D Perspective Dashboard Preview */}
       </MarketingContainer>
-      <MarketingContainer bleed className="mt-8">
+
+      {/* Full-bleed 3D Perspective Dashboard Preview with generous top breathing room */}
+      <MarketingContainer bleed className="mt-4 md:mt-8">
         <DashboardPreview />
       </MarketingContainer>
     </section>
