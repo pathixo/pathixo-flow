@@ -33,8 +33,8 @@ jobs:
         run: |
           if [ -f "package.json" ]; then
             pnpm install --frozen-lockfile || pnpm install
-            pnpm run lint --if-present
-            pnpm run typecheck --if-present
+            pnpm --if-present run lint
+            pnpm --if-present run typecheck
           else
             echo "✓ Inception phase: package.json not yet created. Skipping package lint & typecheck."
           fi
@@ -61,7 +61,7 @@ jobs:
         run: |
           if [ -f "package.json" ]; then
             pnpm install --frozen-lockfile || pnpm install
-            pnpm run test --if-present
+            pnpm --if-present run test
           else
             echo "✓ Inception phase: package.json not yet created. Skipping workspace test suite."
           fi

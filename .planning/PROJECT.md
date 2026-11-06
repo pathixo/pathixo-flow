@@ -73,3 +73,55 @@ The platform is **not** a public self-serve SaaS product and **not** a visual dr
   - Provider Cost Recovery: $100\%$ of agreed billable usage
   - Unbilled Usage: ₹0 at monthly close.
 
+---
+
+## Current Milestone: v2.0 Application Foundation & Landing Page
+
+**Goal:** Establish the frontend application architecture, design system, and production-quality dark-themed marketing landing page for Pathixo Flow.
+
+**Target features:**
+- Next.js application foundation (App Router, TypeScript, Tailwind CSS, pnpm monorepo)
+- Dark-theme design system with design tokens and CSS custom properties
+- Production-quality dark-themed marketing landing page (hero, product preview, capabilities, channels, CTA, footer)
+- Responsive & accessible layouts (desktop, tablet, mobile) with WCAG AA compliance
+- Auth and app route group shells (placeholder architecture, no implementation)
+- Product preview component using real frontend components
+- Navigation and routing foundation for all planned pages
+
+**Key context:**
+- Dark theme applies to the public marketing website only; the authenticated application retains the warm neutral light theme
+- Visual reference: Linear's website aesthetic (dark, editorial, minimalist)
+- No backend implementation in this milestone
+- Anti-AI-slop rules enforced per DESIGN.md Section 1.2
+
+---
+
+## Previous Milestones
+
+### v1.0 Platform Inception & Technical Foundations
+- **Status**: Complete
+- **Delivered**: Project charter, PRD-derived requirements matrix, phased roadmap, CI/CD pipelines, security workflows, governance documentation, GitHub automation, comprehensive design specification, engineering rules, and technical contracts.
+
+---
+
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd-transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd-complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
+
+---
+
+*Last updated: 2026-11-06*
+

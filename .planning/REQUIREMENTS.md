@@ -96,3 +96,69 @@ Priority Definitions:
 | **Cost Attribution** | Every billable event and external spend assigned to client. | $\ge 98\%$ cost attribution coverage. |
 | **Portability** | Containerized applications with documented environment configs. | Dockerized, deployable on standard cloud VPS. |
 
+---
+
+## 6. Milestone v2.0 Requirements: Application Foundation & Landing Page
+
+### 6.1 Monorepo & Application Architecture (ARCH)
+
+| ID | Priority | Requirement | Acceptance Criteria | Target Phase |
+| :--- | :---: | :--- | :--- | :---: |
+| **ARCH-01** | **P0** | Monorepo Workspace Setup | Root `pnpm-workspace.yaml` and root `package.json` with recursive `build`, `dev`, `lint`, `typecheck` scripts. | Phase 1 |
+| **ARCH-02** | **P0** | Next.js 15 Application Base | `apps/web` initialized with Next.js 15 App Router, React 19, TypeScript 5.7 strict mode, and single root layout. | Phase 1 |
+| **ARCH-03** | **P0** | Route Group Segregation | Independent layout boundaries for `(marketing)`, `(auth)`, and `(app)` with zero URL collisions. | Phase 2 |
+| **ARCH-04** | **P0** | Shared Workspace Packages | `@pathixo/design-tokens` and `@pathixo/ui` configured with `transpilePackages` in `next.config.ts`. | Phase 1 |
+| **ARCH-05** | **P0** | Strict TypeScript Safety | `tsconfig.base.json` and package tsconfigs enforce `strict: true` and `noUncheckedIndexedAccess: true`. | Phase 1 |
+
+### 6.2 Design System & Design Tokens (DESIGN)
+
+| ID | Priority | Requirement | Acceptance Criteria | Target Phase |
+| :--- | :---: | :--- | :--- | :---: |
+| **DESIGN-01** | **P0** | Dual-Theme Token Architecture | Centralized tokens in `@pathixo/design-tokens` supporting dark marketing canvas (`#08090A`) and light app canvas (`#F7F7F4`). | Phase 1 |
+| **DESIGN-02** | **P0** | Spatial & Radius Tokens | Unified 4px spacing scale and restrained 2px–6px corner radii mapped via CSS custom properties. | Phase 1 |
+| **DESIGN-03** | **P0** | Accessible UI Primitives | Accessible Radix UI wrappers in `@pathixo/ui`: Button, IconButton, Badge, StatusBadge, Dialog, Drawer, Card, Separator, Table. | Phase 1 |
+| **DESIGN-04** | **P0** | Anti-AI-Slop Prohibition | Zero purple/pink gradients, zero neon glows, zero decorative glassmorphism across all components. | Phase 1 / 3 |
+
+### 6.3 Marketing Landing Page Experience (LANDING)
+
+| ID | Priority | Requirement | Acceptance Criteria | Target Phase |
+| :--- | :---: | :--- | :--- | :---: |
+| **LANDING-01** | **P0** | Sticky Editorial Navigation | Dark navbar with Pathixo Flow brand mark, desktop navigation links, CTA, and accessible mobile drawer. | Phase 3 |
+| **LANDING-02** | **P0** | High-Impact Hero Section | Confident typography ("Automate the work. Stay in control."), supporting description, dual CTAs, and peek positioning. | Phase 3 |
+| **LANDING-03** | **P0** | Core Capabilities Section | 6 structured capability pillars (Communication, Workflow, Integration, Monitoring, Client Isolation, Financial Ledger). | Phase 3 |
+| **LANDING-04** | **P0** | WhatsApp Automation Section | Highlights Meta Cloud API, approved templates, inbound ingestion, and opt-out suppression. | Phase 3 |
+| **LANDING-05** | **P0** | Email Automation Section | Highlights Amazon SES / Resend, template rendering, and bounce/complaint visibility. | Phase 3 |
+| **LANDING-06** | **P0** | Workflow Automation Section | Conceptual visual workflow pipeline illustration (Trigger $\to$ Condition $\to$ Action $\to$ Ledger). | Phase 3 |
+| **LANDING-07** | **P0** | Integrations & Reliability | Category-based integrations, real use cases, and security priorities (client boundaries, zero token leaks). | Phase 3 |
+| **LANDING-08** | **P0** | Multi-Column Footer | Sitemap links, copyright notice (Pathixo Pvt. Ltd.), legal links, and operational status pill. | Phase 3 |
+
+### 6.4 Interactive Product Preview Simulator (PREVIEW)
+
+| ID | Priority | Requirement | Acceptance Criteria | Target Phase |
+| :--- | :---: | :--- | :--- | :---: |
+| **PREVIEW-01** | **P0** | Live Synthetic React Mockup | Dashboard snapshot built with real frontend DOM/SVG components (zero raster screenshots or placeholder wireframes). | Phase 2 |
+| **PREVIEW-02** | **P0** | 3-Stage Pipeline Simulation | Demonstrates Ingest (HMAC verified) $\to$ Worker (BullMQ lock & idempotency) $\to$ Financial Ledger (Attribution). | Phase 2 |
+| **PREVIEW-03** | **P0** | Firewall-Safe Mock Data | Uses dummy ranges (`+15550100`..`+15550199`) and dummy tokens to pass `.github/workflows/security-firewall.yml`. | Phase 2 |
+| **PREVIEW-04** | **P0** | Responsive Preview Scaling | Adapts cleanly across viewport breakpoints without horizontal overflow or clipping glitches. | Phase 2 / 3 |
+
+### 6.5 Application Route & Layout Shells (SHELL)
+
+| ID | Priority | Requirement | Acceptance Criteria | Target Phase |
+| :--- | :---: | :--- | :--- | :---: |
+| **SHELL-01** | **P0** | Authentication Shell | Centered distraction-free layout on warm neutral light canvas in `(auth)`. | Phase 4 |
+| **SHELL-02** | **P0** | Auth Route Placeholders | Clean placeholder pages for `/login`, `/forgot-password`, `/reset-password`, `/verify-email`. | Phase 4 |
+| **SHELL-03** | **P0** | Authenticated Console Shell | 240px collapsible sidebar, 48px header, breadcrumbs, and command palette placeholder in `(app)`. | Phase 4 |
+| **SHELL-04** | **P0** | App Route Placeholders | Operational header placeholders for `/workspace`, `/workspace/whatsapp`, `/workspace/email`, `/workspace/workflows`, `/workspace/ledger`, `/workspace/operations`, `/workspace/settings`. | Phase 4 |
+| **SHELL-05** | **P0** | Search Indexing Protection | `robots: { index: false, follow: false }` metadata guard applied to all `(auth)` and `(app)` routes. | Phase 4 |
+
+### 6.6 Engineering Quality, Accessibility & Validation (QUAL)
+
+| ID | Priority | Requirement | Acceptance Criteria | Target Phase |
+| :--- | :---: | :--- | :--- | :---: |
+| **QUAL-01** | **P0** | WCAG 2.2 AA Contrast | Text and interactive boundaries achieve $\ge 4.5:1$ contrast across both dark marketing and light app themes. | Phase 5 |
+| **QUAL-02** | **P0** | Responsive Viewport Support | Clean layouts verified at 1440px, 1024px, 768px, and 375px viewports. | Phase 5 |
+| **QUAL-03** | **P0** | Fast LCP Performance | $\le 1.2\text{s}$ LCP target with zero blocking raster images above the fold. | Phase 5 |
+| **QUAL-04** | **P0** | Build & Typecheck Green | `pnpm -r run build`, `pnpm -r run lint`, and `pnpm -r run typecheck` pass with zero errors. | Phase 5 |
+| **QUAL-05** | **P0** | Complete Documentation | `docs/ARCHITECTURE.md`, `docs/DESIGN.md`, `docs/RULES.md`, `docs/TASKS.md`, `docs/COMPONENTS.md` aligned with codebase. | Phase 5 |
+
+
