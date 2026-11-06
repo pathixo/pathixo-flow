@@ -8,23 +8,22 @@ import {
   Mail,
   Layers,
   CheckCircle2,
-  AlertCircle,
   TrendingUp,
 } from 'lucide-react';
 
 export function DashboardPreview() {
   return (
-    <div className="relative mx-auto w-full max-w-5xl">
-      {/* Ambient background glow */}
+    <div className="relative w-full max-w-6xl mx-auto [perspective:1400px]">
+      {/* Subtle top specular glow */}
       <div
-        className="pointer-events-none absolute -inset-4 bg-gradient-to-b from-white/5 to-transparent blur-2xl opacity-40 rounded-3xl"
+        className="pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 w-3/4 h-28 bg-white/5 blur-3xl opacity-50 rounded-full"
         aria-hidden="true"
       />
 
-      {/* Main Window Frame with subtle perspective tilt */}
-      <div className="relative rounded-xl sm:rounded-2xl border border-[#25272B] bg-[#0E1013] shadow-2xl overflow-hidden font-sans text-xs">
+      {/* 3D Perspective Window Frame */}
+      <div className="relative rounded-2xl border border-[#25272B] bg-[#0E1013] shadow-[0_-20px_80px_-20px_rgba(255,255,255,0.08),0_40px_100px_-20px_rgba(0,0,0,0.9)] overflow-hidden font-sans text-xs [transform:rotateX(14deg)] [transform-origin:top_center] [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)]">
         {/* Window Top Bar / Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[#1E2024] bg-[#0A0C0E]">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-[#1E2024] bg-[#0A0C0E]">
           <div className="flex items-center gap-2">
             <div className="flex h-5 w-5 items-center justify-center rounded bg-white text-black font-bold text-[10px]">
               F
@@ -33,7 +32,7 @@ export function DashboardPreview() {
           </div>
 
           {/* Search / Command Bar */}
-          <div className="hidden sm:flex items-center justify-between w-72 px-3 py-1.5 rounded-md border border-[#25272B] bg-[#14161A] text-[#747780]">
+          <div className="hidden sm:flex items-center justify-between w-80 px-3.5 py-1.5 rounded-md border border-[#25272B] bg-[#14161A] text-[#747780]">
             <div className="flex items-center gap-2">
               <Search className="h-3.5 w-3.5" />
               <span className="text-[11px]">Search or jump to...</span>
@@ -60,33 +59,33 @@ export function DashboardPreview() {
         </div>
 
         {/* Dashboard Shell: Sidebar + Main Content */}
-        <div className="flex flex-col md:flex-row min-h-[380px]">
+        <div className="flex flex-col md:flex-row min-h-[360px]">
           {/* Sidebar */}
-          <aside className="w-full md:w-44 border-b md:border-b-0 md:border-r border-[#1E2024] bg-[#0A0C0E]/60 p-3 space-y-1">
-            <div className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md bg-[#1B1D21] text-white font-medium">
+          <aside className="w-full md:w-48 border-b md:border-b-0 md:border-r border-[#1E2024] bg-[#0A0C0E]/70 p-3 space-y-1">
+            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-md bg-[#1B1D21] text-white font-medium">
               <Home className="h-3.5 w-3.5 text-white" />
               <span>Overview</span>
             </div>
-            <div className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
+            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
               <GitBranch className="h-3.5 w-3.5" />
               <span>Workflows</span>
             </div>
-            <div className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
+            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
               <MessageSquare className="h-3.5 w-3.5 text-[#25D366]" />
               <span>WhatsApp</span>
             </div>
-            <div className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
+            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
               <Mail className="h-3.5 w-3.5 text-sky-400" />
               <span>Email</span>
             </div>
-            <div className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
+            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
               <Layers className="h-3.5 w-3.5" />
               <span>Integrations</span>
             </div>
           </aside>
 
           {/* Main Dashboard Pane */}
-          <main className="flex-1 p-4 sm:p-6 bg-[#0E1013] space-y-5">
+          <main className="flex-1 p-5 sm:p-6 bg-[#0E1013] space-y-5">
             {/* Overview Header */}
             <div>
               <h3 className="text-base font-semibold text-white tracking-tight">Overview</h3>
@@ -98,7 +97,7 @@ export function DashboardPreview() {
             {/* 4 Top Metric Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {/* Card 1: Workflows */}
-              <div className="p-3 rounded-lg border border-[#1E2024] bg-[#121418]">
+              <div className="p-3.5 rounded-lg border border-[#1E2024] bg-[#121418]">
                 <div className="flex items-center justify-between text-[#747780] text-[10px] mb-1">
                   <span>Workflows</span>
                   <span className="flex h-1.5 w-1.5 rounded-full bg-[#10B981]" />
@@ -107,7 +106,7 @@ export function DashboardPreview() {
               </div>
 
               {/* Card 2: Messages (24h) */}
-              <div className="p-3 rounded-lg border border-[#1E2024] bg-[#121418]">
+              <div className="p-3.5 rounded-lg border border-[#1E2024] bg-[#121418]">
                 <div className="flex items-center justify-between text-[#747780] text-[10px] mb-1">
                   <span>Messages (24h)</span>
                   <MessageSquare className="h-3 w-3 text-[#A0A2A8]" />
@@ -116,7 +115,7 @@ export function DashboardPreview() {
               </div>
 
               {/* Card 3: Success Rate */}
-              <div className="p-3 rounded-lg border border-[#1E2024] bg-[#121418]">
+              <div className="p-3.5 rounded-lg border border-[#1E2024] bg-[#121418]">
                 <div className="flex items-center justify-between text-[#747780] text-[10px] mb-1">
                   <span>Success rate</span>
                   <CheckCircle2 className="h-3 w-3 text-[#10B981]" />
@@ -125,7 +124,7 @@ export function DashboardPreview() {
               </div>
 
               {/* Card 4: Failed */}
-              <div className="p-3 rounded-lg border border-[#1E2024] bg-[#121418]">
+              <div className="p-3.5 rounded-lg border border-[#1E2024] bg-[#121418]">
                 <div className="flex items-center justify-between text-[#747780] text-[10px] mb-1">
                   <span>Failed</span>
                   <span className="text-[9px] px-1 py-0.2 rounded bg-rose-500/20 text-rose-400 font-medium">
@@ -137,7 +136,7 @@ export function DashboardPreview() {
             </div>
 
             {/* Bottom Row: Execution Trend + Recent Activity */}
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-3">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-3.5">
               {/* Left: Execution Trend Bar Chart (3 cols) */}
               <div className="lg:col-span-3 p-3.5 rounded-lg border border-[#1E2024] bg-[#121418] flex flex-col justify-between">
                 <div className="flex items-center justify-between mb-3 text-[11px]">
@@ -147,7 +146,7 @@ export function DashboardPreview() {
                   </span>
                   <span className="text-[10px] text-[#747780]">Last 7 days</span>
                 </div>
-                <div className="h-28 flex items-end justify-between gap-2 pt-2 px-2">
+                <div className="h-24 flex items-end justify-between gap-2.5 pt-2 px-2">
                   {[
                     { day: 'Mon', h: '62%' },
                     { day: 'Tue', h: '78%' },
@@ -206,6 +205,12 @@ export function DashboardPreview() {
           </main>
         </div>
       </div>
+
+      {/* Bottom Gradient Overlay that seamlessly dissolves into #08090A */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#08090A] via-[#08090A]/80 to-transparent"
+        aria-hidden="true"
+      />
     </div>
   );
 }
