@@ -7,195 +7,331 @@ import {
   MessageSquare,
   Mail,
   Layers,
+  Users,
+  Settings,
   CheckCircle2,
   TrendingUp,
+  ArrowUpRight,
+  SlidersHorizontal,
+  ChevronDown,
+  Sparkles,
 } from 'lucide-react';
 
 export function DashboardPreview() {
   return (
-    <div className="relative w-full [perspective:1400px]">
-      {/* Subtle top specular glow */}
+    <div className="relative w-full max-w-[1180px] mx-auto [perspective:1200px]">
+      {/* Specular ambient background glow for depth */}
       <div
-        className="pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 w-3/4 h-28 bg-white/5 blur-3xl opacity-50 rounded-full"
+        className="pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 w-4/5 h-36 bg-gradient-to-b from-white/10 to-transparent blur-3xl opacity-60 rounded-full"
         aria-hidden="true"
       />
 
-      {/* 3D Perspective Window Frame */}
-      <div className="relative rounded-2xl border border-[#25272B] bg-[#0E1013] shadow-[0_-20px_80px_-20px_rgba(255,255,255,0.08),0_40px_100px_-20px_rgba(0,0,0,0.9)] overflow-hidden font-sans text-xs [transform:rotateX(14deg)] [transform-origin:top_center] [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)]">
-        {/* Window Top Bar / Header */}
-        <div className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-[#1E2024] bg-[#0A0C0E]">
-          <div className="flex items-center gap-2">
-            <div className="flex h-5 w-5 items-center justify-center rounded bg-white text-black font-bold text-[10px]">
+      {/* 3D Angular Tilt Window Frame */}
+      <div
+        className="relative rounded-2xl border-t border-t-white/20 border-x border-x-white/10 border-b border-b-white/5 bg-gradient-to-b from-[#131519] via-[#0E1013] to-[#0A0C0E] shadow-[0_50px_120px_-20px_rgba(0,0,0,0.95),0_0_80px_rgba(255,255,255,0.04)] overflow-hidden font-sans text-xs transition-transform duration-300"
+        style={{
+          transform: 'perspective(1100px) rotateX(20deg) scale(0.98)',
+          transformOrigin: '50% 0%',
+        }}
+      >
+        {/* Subtle glass reflection highlight */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.07]"
+          aria-hidden="true"
+        />
+
+        {/* Window Titlebar */}
+        <div className="relative z-10 flex items-center justify-between px-4 sm:px-6 py-3 border-b border-[#22252B] bg-[#0B0D10]/80 backdrop-blur-md">
+          {/* Left Brand Mark */}
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-5 w-5 items-center justify-center rounded bg-white text-black font-bold text-[10px] shadow-sm">
               F
             </div>
-            <span className="text-xs font-semibold text-white">Flow</span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xs font-semibold text-white tracking-tight">Pathixo Flow</span>
+              <span className="text-[10px] text-[#747780] font-mono hidden sm:inline">v2.0</span>
+            </div>
           </div>
 
-          {/* Search / Command Bar */}
-          <div className="hidden sm:flex items-center justify-between w-80 px-3.5 py-1.5 rounded-md border border-[#25272B] bg-[#14161A] text-[#747780]">
+          {/* Center Search / Command Bar */}
+          <div className="hidden sm:flex items-center justify-between w-96 px-3 py-1.5 rounded-lg border border-[#262930] bg-[#14161B] text-[#747780] shadow-inner">
             <div className="flex items-center gap-2">
-              <Search className="h-3.5 w-3.5" />
-              <span className="text-[11px]">Search or jump to...</span>
+              <Search className="h-3.5 w-3.5 text-[#747780]" />
+              <span className="text-[11px] text-[#8A8D96]">Search workflows, templates, executions...</span>
             </div>
-            <kbd className="px-1.5 py-0.5 rounded bg-[#1F2228] border border-[#2C3038] text-[9px] font-mono text-[#A0A2A8]">
+            <kbd className="px-1.5 py-0.5 rounded bg-[#1D2026] border border-[#2C3038] text-[9px] font-mono text-[#A0A2A8]">
               ⌘K
             </kbd>
           </div>
 
-          {/* Right Header: Notification & Profile */}
+          {/* Right Header Status, Notifications & Profile */}
           <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-[10px] font-medium">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Operational</span>
+            </div>
+
             <button
               type="button"
-              className="relative p-1 text-[#A0A2A8] hover:text-white transition-colors"
+              className="relative p-1.5 rounded-md border border-[#22252B] bg-[#14161B] text-[#A0A2A8] hover:text-white transition-colors"
               aria-label="Notifications"
             >
               <Bell className="h-3.5 w-3.5" />
-              <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-brand" />
+              <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-amber-400" />
             </button>
-            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#25272B] text-white text-[11px] font-semibold border border-[#35383F]">
-              P
+
+            <div className="flex items-center gap-2 pl-1">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-tr from-[#25272B] to-[#3B3E45] text-white text-[11px] font-semibold border border-white/20 shadow-sm">
+                P
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Dashboard Shell: Sidebar + Main Content */}
-        <div className="flex flex-col md:flex-row min-h-[360px]">
-          {/* Sidebar */}
-          <aside className="w-full md:w-48 border-b md:border-b-0 md:border-r border-[#1E2024] bg-[#0A0C0E]/70 p-3 space-y-1">
-            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-md bg-[#1B1D21] text-white font-medium">
-              <Home className="h-3.5 w-3.5 text-white" />
-              <span>Overview</span>
+        {/* Dashboard Body: Sidebar + Main Workspace */}
+        <div className="relative z-10 flex flex-col md:flex-row min-h-[460px]">
+          {/* Left Sidebar */}
+          <aside className="w-full md:w-52 border-b md:border-b-0 md:border-r border-[#22252B] bg-[#0C0E11]/80 p-3 flex flex-col justify-between">
+            <div className="space-y-1">
+              <div className="px-2 pb-2 text-[10px] font-semibold uppercase tracking-wider text-[#63666F]">
+                Main Menu
+              </div>
+
+              <div className="flex items-center justify-between px-2.5 py-1.5 rounded-md bg-white/[0.08] text-white font-medium border border-white/10 shadow-sm">
+                <div className="flex items-center gap-2.5">
+                  <Home className="h-3.5 w-3.5 text-white" />
+                  <span>Overview</span>
+                </div>
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              </div>
+
+              <div className="flex items-center justify-between px-2.5 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-white/[0.04] transition-colors">
+                <div className="flex items-center gap-2.5">
+                  <GitBranch className="h-3.5 w-3.5 text-[#8A8D96]" />
+                  <span>Workflows</span>
+                </div>
+                <span className="text-[10px] font-mono text-[#747780] px-1.5 py-0.2 rounded bg-[#181A20]">12</span>
+              </div>
+
+              <div className="flex items-center justify-between px-2.5 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-white/[0.04] transition-colors">
+                <div className="flex items-center gap-2.5">
+                  <MessageSquare className="h-3.5 w-3.5 text-[#25D366]" />
+                  <span>WhatsApp</span>
+                </div>
+                <span className="text-[10px] font-mono text-[#747780] px-1.5 py-0.2 rounded bg-[#181A20]">4.2k</span>
+              </div>
+
+              <div className="flex items-center justify-between px-2.5 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-white/[0.04] transition-colors">
+                <div className="flex items-center gap-2.5">
+                  <Mail className="h-3.5 w-3.5 text-sky-400" />
+                  <span>Email</span>
+                </div>
+                <span className="text-[10px] font-mono text-[#747780] px-1.5 py-0.2 rounded bg-[#181A20]">1.8k</span>
+              </div>
+
+              <div className="flex items-center justify-between px-2.5 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-white/[0.04] transition-colors">
+                <div className="flex items-center gap-2.5">
+                  <Layers className="h-3.5 w-3.5 text-[#8A8D96]" />
+                  <span>Integrations</span>
+                </div>
+                <span className="text-[9px] text-emerald-400 font-mono">Active</span>
+              </div>
+
+              <div className="flex items-center justify-between px-2.5 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-white/[0.04] transition-colors">
+                <div className="flex items-center gap-2.5">
+                  <Users className="h-3.5 w-3.5 text-[#8A8D96]" />
+                  <span>Clients</span>
+                </div>
+                <span className="text-[10px] font-mono text-[#747780] px-1.5 py-0.2 rounded bg-[#181A20]">8</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
-              <GitBranch className="h-3.5 w-3.5" />
-              <span>Workflows</span>
-            </div>
-            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
-              <MessageSquare className="h-3.5 w-3.5 text-[#25D366]" />
-              <span>WhatsApp</span>
-            </div>
-            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
-              <Mail className="h-3.5 w-3.5 text-sky-400" />
-              <span>Email</span>
-            </div>
-            <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[#A0A2A8] hover:text-white hover:bg-[#14161A] transition-colors">
-              <Layers className="h-3.5 w-3.5" />
-              <span>Integrations</span>
+
+            {/* Bottom Workspace Switcher */}
+            <div className="pt-3 border-t border-[#22252B] mt-4">
+              <div className="p-2 rounded-lg border border-[#262930] bg-[#121418] flex items-center justify-between">
+                <div className="truncate">
+                  <div className="text-[11px] font-medium text-white truncate">Acme Enterprise</div>
+                  <div className="text-[9px] text-[#747780]">Tier 2 Production</div>
+                </div>
+                <ChevronDown className="h-3 w-3 text-[#747780] shrink-0" />
+              </div>
             </div>
           </aside>
 
           {/* Main Dashboard Pane */}
-          <main className="flex-1 p-5 sm:p-6 bg-[#0E1013] space-y-5">
-            {/* Overview Header */}
-            <div>
-              <h3 className="text-base font-semibold text-white tracking-tight">Overview</h3>
-              <p className="text-[11px] text-[#747780] mt-0.5">
-                Real-time automation activity at a glance.
-              </p>
+          <main className="flex-1 p-5 sm:p-7 space-y-6 bg-[#0E1013]/90">
+            {/* Overview Header with Date Range */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h3 className="text-lg font-semibold text-white tracking-tight">Good morning</h3>
+                <p className="text-xs text-[#8A8D96] mt-0.5">
+                  Here's what's happening across your automations today.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[#262930] bg-[#14161B] text-[11px] text-[#A0A2A8]">
+                  <span>Last 7 days</span>
+                  <ChevronDown className="h-3 w-3 text-[#747780]" />
+                </div>
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[#262930] bg-[#14161B] text-[11px] text-[#A0A2A8]">
+                  <SlidersHorizontal className="h-3 w-3 text-[#747780]" />
+                  <span>Filter</span>
+                </div>
+              </div>
             </div>
 
-            {/* 4 Top Metric Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {/* Card 1: Workflows */}
-              <div className="p-3.5 rounded-lg border border-[#1E2024] bg-[#121418]">
-                <div className="flex items-center justify-between text-[#747780] text-[10px] mb-1">
-                  <span>Workflows</span>
-                  <span className="flex h-1.5 w-1.5 rounded-full bg-[#10B981]" />
-                </div>
-                <div className="text-lg font-semibold text-white tracking-tight">12 active</div>
-              </div>
-
-              {/* Card 2: Messages (24h) */}
-              <div className="p-3.5 rounded-lg border border-[#1E2024] bg-[#121418]">
-                <div className="flex items-center justify-between text-[#747780] text-[10px] mb-1">
-                  <span>Messages (24h)</span>
-                  <MessageSquare className="h-3 w-3 text-[#A0A2A8]" />
-                </div>
-                <div className="text-lg font-semibold text-white tracking-tight">4,280</div>
-              </div>
-
-              {/* Card 3: Success Rate */}
-              <div className="p-3.5 rounded-lg border border-[#1E2024] bg-[#121418]">
-                <div className="flex items-center justify-between text-[#747780] text-[10px] mb-1">
-                  <span>Success rate</span>
-                  <CheckCircle2 className="h-3 w-3 text-[#10B981]" />
-                </div>
-                <div className="text-lg font-semibold text-white tracking-tight">99.2%</div>
-              </div>
-
-              {/* Card 4: Failed */}
-              <div className="p-3.5 rounded-lg border border-[#1E2024] bg-[#121418]">
-                <div className="flex items-center justify-between text-[#747780] text-[10px] mb-1">
-                  <span>Failed</span>
-                  <span className="text-[9px] px-1 py-0.2 rounded bg-rose-500/20 text-rose-400 font-medium">
-                    Alert
+            {/* 4 Rich Metric Cards */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+              {/* Card 1: Automations */}
+              <div className="p-4 rounded-xl border border-[#22252B] bg-gradient-to-b from-[#14161B] to-[#101216] shadow-sm space-y-2">
+                <div className="flex items-center justify-between text-[#8A8D96] text-[11px]">
+                  <span>Automations</span>
+                  <span className="text-[10px] font-medium text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">
+                    +12%
                   </span>
                 </div>
-                <div className="text-lg font-semibold text-white tracking-tight">34</div>
+                <div className="text-2xl font-bold text-white tracking-tight">24</div>
+                <div className="text-[10px] text-[#747780]">12 active workflows</div>
+              </div>
+
+              {/* Card 2: Executions */}
+              <div className="p-4 rounded-xl border border-[#22252B] bg-gradient-to-b from-[#14161B] to-[#101216] shadow-sm space-y-2">
+                <div className="flex items-center justify-between text-[#8A8D96] text-[11px]">
+                  <span>Executions</span>
+                  <span className="text-[10px] font-medium text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">
+                    +8%
+                  </span>
+                </div>
+                <div className="text-2xl font-bold text-white tracking-tight">1,248</div>
+                <div className="text-[10px] text-[#747780]">avg 18ms latency</div>
+              </div>
+
+              {/* Card 3: Messages Sent */}
+              <div className="p-4 rounded-xl border border-[#22252B] bg-gradient-to-b from-[#14161B] to-[#101216] shadow-sm space-y-2">
+                <div className="flex items-center justify-between text-[#8A8D96] text-[11px]">
+                  <span>Messages sent</span>
+                  <span className="text-[10px] font-medium text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">
+                    +11%
+                  </span>
+                </div>
+                <div className="text-2xl font-bold text-white tracking-tight">48,320</div>
+                <div className="text-[10px] text-emerald-400 flex items-center gap-1">
+                  <CheckCircle2 className="h-2.5 w-2.5" />
+                  99.2% delivered
+                </div>
+              </div>
+
+              {/* Card 4: Failures */}
+              <div className="p-4 rounded-xl border border-[#22252B] bg-gradient-to-b from-[#14161B] to-[#101216] shadow-sm space-y-2">
+                <div className="flex items-center justify-between text-[#8A8D96] text-[11px]">
+                  <span>Failures</span>
+                  <span className="text-[10px] font-medium text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">
+                    -40%
+                  </span>
+                </div>
+                <div className="text-2xl font-bold text-white tracking-tight">12</div>
+                <div className="text-[10px] text-[#747780]">0 DLQ quarantined</div>
               </div>
             </div>
 
             {/* Bottom Row: Execution Trend + Recent Activity */}
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-3.5">
-              {/* Left: Execution Trend Bar Chart (3 cols) */}
-              <div className="lg:col-span-3 p-3.5 rounded-lg border border-[#1E2024] bg-[#121418] flex flex-col justify-between">
-                <div className="flex items-center justify-between mb-3 text-[11px]">
-                  <span className="font-medium text-white flex items-center gap-1.5">
-                    <TrendingUp className="h-3 w-3 text-[#10B981]" />
-                    Execution trend
-                  </span>
-                  <span className="text-[10px] text-[#747780]">Last 7 days</span>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              {/* Left: Execution Trend Bar Chart (7 cols) */}
+              <div className="lg:col-span-7 p-4 rounded-xl border border-[#22252B] bg-[#121418] flex flex-col justify-between">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
+                    <span className="text-xs font-semibold text-white">Execution Trend</span>
+                  </div>
+                  <div className="text-[10px] font-mono text-[#747780] bg-[#181A20] px-2 py-0.5 rounded border border-[#262930]">
+                    Peak: 9,420 / day
+                  </div>
                 </div>
-                <div className="h-24 flex items-end justify-between gap-2.5 pt-2 px-2">
+
+                {/* 7-Day Bar Graph */}
+                <div className="h-32 flex items-end justify-between gap-3 pt-3 px-2 border-b border-[#1E2127] pb-2">
                   {[
-                    { day: 'Mon', h: '62%' },
-                    { day: 'Tue', h: '78%' },
-                    { day: 'Wed', h: '92%' },
-                    { day: 'Thu', h: '84%' },
-                    { day: 'Fri', h: '98%' },
-                    { day: 'Sat', h: '45%' },
-                    { day: 'Sun', h: '55%' },
+                    { day: 'Mon', h: '55%', count: '6.2k' },
+                    { day: 'Tue', h: '72%', count: '7.8k' },
+                    { day: 'Wed', h: '88%', count: '8.9k' },
+                    { day: 'Thu', h: '82%', count: '8.4k' },
+                    { day: 'Fri', h: '98%', count: '9.4k', active: true },
+                    { day: 'Sat', h: '42%', count: '4.1k' },
+                    { day: 'Sun', h: '50%', count: '5.0k' },
                   ].map((bar) => (
-                    <div key={bar.day} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+                    <div key={bar.day} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity text-[8px] font-mono text-white mb-1">
+                        {bar.count}
+                      </div>
                       <div
-                        className="w-full max-w-[28px] rounded-t bg-[#2C3038] hover:bg-white transition-colors"
+                        className={`w-full max-w-[32px] rounded-t transition-all ${
+                          bar.active
+                            ? 'bg-white shadow-[0_0_15px_rgba(255,255,255,0.4)]'
+                            : 'bg-[#2A2E37] group-hover:bg-[#404654]'
+                        }`}
                         style={{ height: bar.h }}
                       />
-                      <span className="text-[9px] text-[#747780]">{bar.day}</span>
+                      <span className={`text-[10px] ${bar.active ? 'text-white font-semibold' : 'text-[#747780]'}`}>
+                        {bar.day}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Right: Recent Activity (2 cols) */}
-              <div className="lg:col-span-2 p-3.5 rounded-lg border border-[#1E2024] bg-[#121418]">
-                <div className="flex items-center justify-between mb-3 text-[11px]">
-                  <span className="font-medium text-white">Recent activity</span>
-                  <span className="text-[10px] text-[#747780]">Live</span>
+              {/* Right: Recent Executions (5 cols) */}
+              <div className="lg:col-span-5 p-4 rounded-xl border border-[#22252B] bg-[#121418] flex flex-col justify-between">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-semibold text-white">Recent Executions</span>
+                  <a href="#workflows" className="text-[10px] text-[#A0A2A8] hover:text-white flex items-center gap-1 transition-colors">
+                    View all
+                    <ArrowUpRight className="h-3 w-3" />
+                  </a>
                 </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-2 rounded border border-[#1E2024] bg-[#0E1013]">
-                    <div className="flex items-center gap-2 truncate">
-                      <MessageSquare className="h-3 w-3 text-[#25D366] shrink-0" />
+
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between p-2.5 rounded-lg border border-[#22252B] bg-[#0E1013] hover:border-[#2C3038] transition-colors">
+                    <div className="flex items-center gap-2.5 truncate">
+                      <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#25D366]/15 text-[#25D366] shrink-0 border border-[#25D366]/20">
+                        <MessageSquare className="h-3 w-3" />
+                      </div>
                       <div className="truncate">
                         <div className="text-[11px] font-medium text-white truncate">Customer follow-up</div>
-                        <div className="text-[9px] text-[#747780]">2m ago</div>
+                        <div className="text-[9px] text-[#747780] font-mono">wamid.HBgL... &bull; 2m ago</div>
                       </div>
                     </div>
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#10B981]/15 text-[#10B981] font-mono shrink-0">
+                    <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium shrink-0">
                       Completed
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between p-2 rounded border border-[#1E2024] bg-[#0E1013]">
-                    <div className="flex items-center gap-2 truncate">
-                      <Mail className="h-3 w-3 text-sky-400 shrink-0" />
+                  <div className="flex items-center justify-between p-2.5 rounded-lg border border-[#22252B] bg-[#0E1013] hover:border-[#2C3038] transition-colors">
+                    <div className="flex items-center gap-2.5 truncate">
+                      <div className="flex h-6 w-6 items-center justify-center rounded-md bg-sky-500/15 text-sky-400 shrink-0 border border-sky-500/20">
+                        <Mail className="h-3 w-3" />
+                      </div>
                       <div className="truncate">
-                        <div className="text-[11px] font-medium text-white truncate">Order notification</div>
-                        <div className="text-[9px] text-[#747780]">5m ago</div>
+                        <div className="text-[11px] font-medium text-white truncate">Order confirmation #482</div>
+                        <div className="text-[9px] text-[#747780] font-mono">ses.msg_98a... &bull; 5m ago</div>
                       </div>
                     </div>
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#10B981]/15 text-[#10B981] font-mono shrink-0">
+                    <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium shrink-0">
+                      Completed
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between p-2.5 rounded-lg border border-[#22252B] bg-[#0E1013] hover:border-[#2C3038] transition-colors">
+                    <div className="flex items-center gap-2.5 truncate">
+                      <div className="flex h-6 w-6 items-center justify-center rounded-md bg-purple-500/15 text-purple-400 shrink-0 border border-purple-500/20">
+                        <Layers className="h-3 w-3" />
+                      </div>
+                      <div className="truncate">
+                        <div className="text-[11px] font-medium text-white truncate">CRM Contact Sync</div>
+                        <div className="text-[9px] text-[#747780] font-mono">hook.lead_01... &bull; 12m ago</div>
+                      </div>
+                    </div>
+                    <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium shrink-0">
                       Completed
                     </span>
                   </div>
@@ -206,9 +342,9 @@ export function DashboardPreview() {
         </div>
       </div>
 
-      {/* Bottom Gradient Overlay that seamlessly dissolves into #08090A */}
+      {/* Deep Bottom Gradient Bleed that gracefully dissolves into #08090A */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#08090A] via-[#08090A]/80 to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#08090A] via-[#08090A]/70 to-transparent z-20"
         aria-hidden="true"
       />
     </div>
