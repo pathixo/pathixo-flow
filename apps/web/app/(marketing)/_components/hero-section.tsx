@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { MarketingContainer } from './marketing-container';
 import { DashboardPreview } from './dashboard-preview';
 
 export function HeroSection() {
   return (
     <section className="relative pt-10 pb-16 md:pt-12 md:pb-20 overflow-hidden bg-[#08090A]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <MarketingContainer>
         {/* Left-Aligned Editorial Headline */}
         <div className="max-w-3xl space-y-4 text-left mb-8">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-white leading-[1.08]">
@@ -42,11 +43,11 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* 3D Perspective Dashboard Preview */}
-        <div className="w-full">
-          <DashboardPreview />
-        </div>
-      </div>
+        {/* Full-bleed 3D Perspective Dashboard Preview */}
+      </MarketingContainer>
+      <MarketingContainer bleed className="mt-8">
+        <DashboardPreview />
+      </MarketingContainer>
     </section>
   );
 }

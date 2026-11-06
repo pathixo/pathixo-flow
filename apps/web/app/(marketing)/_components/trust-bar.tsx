@@ -7,6 +7,7 @@ import {
   Code2,
   Container,
 } from 'lucide-react';
+import { MarketingContainer } from './marketing-container';
 
 const INFRASTRUCTURE_STACK = [
   {
@@ -44,7 +45,7 @@ const INFRASTRUCTURE_STACK = [
 export function TrustBar() {
   return (
     <div className="w-full border-b border-border/40 bg-[#08090A] py-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <MarketingContainer>
         <p className="text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-text-muted mb-8">
           Engineered for Production Infrastructure
         </p>
@@ -70,7 +71,7 @@ export function TrustBar() {
             );
           })}
         </div>
-      </div>
+      </MarketingContainer>
     </div>
   );
 }

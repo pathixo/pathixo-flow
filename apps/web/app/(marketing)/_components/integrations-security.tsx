@@ -12,11 +12,12 @@ import {
   KeyRound,
   Activity,
 } from 'lucide-react';
+import { MarketingContainer } from './marketing-container';
 
 export function IntegrationsSecurity() {
   return (
     <div className="space-y-24 py-16 md:py-24 border-t border-[#1E2024] bg-[#08090A]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-24">
+      <MarketingContainer className="space-y-24">
         {/* Section 1: Integrations */}
         <section id="integrations" className="space-y-10">
           <div className="max-w-2xl space-y-3">
@@ -160,7 +161,7 @@ export function IntegrationsSecurity() {
             </div>
           </div>
         </section>
-      </div>
+      </MarketingContainer>
     </div>
   );
 }

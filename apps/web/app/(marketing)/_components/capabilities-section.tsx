@@ -7,6 +7,7 @@ import {
   Users,
   Coins,
 } from 'lucide-react';
+import { MarketingContainer } from './marketing-container';
 
 const CAPABILITIES = [
   {
@@ -44,7 +45,7 @@ const CAPABILITIES = [
 export function CapabilitiesSection() {
   return (
     <section id="capabilities" className="py-20 md:py-28 border-t border-[#1E2024] bg-[#08090A]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <MarketingContainer>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Column: Heading & Description */}
           <div className="lg:col-span-5 space-y-4">
@@ -77,7 +78,7 @@ export function CapabilitiesSection() {
             })}
           </div>
         </div>
-      </div>
+      </MarketingContainer>
     </section>
   );
 }

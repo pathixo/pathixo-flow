@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
+import { MarketingContainer } from './marketing-container';
 import { MobileNav } from './mobile-nav';
 
 const NAV_LINKS = [
@@ -14,7 +15,7 @@ const NAV_LINKS = [
 export function MarketingHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#1E2024] bg-[#08090A]/90 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <MarketingContainer className="h-16 flex items-center justify-between">
         {/* Brand Wordmark: "Flow by Pathixo" */}
         <Link href="/" className="flex items-center gap-2 group">
           <div className="flex h-6 w-6 items-center justify-center rounded bg-white text-black font-bold text-xs tracking-tight">
@@ -61,7 +62,7 @@ export function MarketingHeader() {
           </a>
           <MobileNav />
         </div>
-      </div>
+      </MarketingContainer>
     </header>
   );
 }

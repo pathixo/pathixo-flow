@@ -6,11 +6,12 @@ import {
   Mail,
   ArrowRight,
 } from 'lucide-react';
+import { MarketingContainer } from './marketing-container';
 
 export function WorkflowPipeline() {
   return (
     <section id="workflows" className="py-20 md:py-28 border-t border-[#1E2024] bg-[#08090A]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <MarketingContainer>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left Text */}
           <div className="lg:col-span-5 space-y-5">
@@ -96,7 +97,7 @@ export function WorkflowPipeline() {
             </div>
           </div>
         </div>
-      </div>
+      </MarketingContainer>
     </section>
   );
 }

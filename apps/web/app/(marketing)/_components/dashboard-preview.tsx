@@ -13,7 +13,7 @@ import {
 
 export function DashboardPreview() {
   return (
-    <div className="relative w-full max-w-6xl mx-auto [perspective:1400px]">
+    <div className="relative w-full [perspective:1400px]">
       {/* Subtle top specular glow */}
       <div
         className="pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 w-3/4 h-28 bg-white/5 blur-3xl opacity-50 rounded-full"

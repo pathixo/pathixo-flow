@@ -1,11 +1,12 @@
 import * as React from 'react';
 import Link from 'next/link';
+import { MarketingContainer } from './marketing-container';
 import { Linkedin, Youtube } from 'lucide-react';
 
 export function MarketingFooter() {
   return (
     <footer className="w-full border-t border-[#1E2024] bg-[#08090A] text-[#A0A2A8] pt-16 pb-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <MarketingContainer>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-16">
           {/* Brand Left Column (5 cols) */}
           <div className="md:col-span-5 space-y-4">
@@ -131,7 +132,7 @@ export function MarketingFooter() {
             </ul>
           </div>
         </div>
-      </div>
+      </MarketingContainer>
     </footer>
   );
 }

@@ -5,11 +5,12 @@ import {
   ArrowRight,
   Plus,
 } from 'lucide-react';
+import { MarketingContainer } from './marketing-container';
 
 export function ChannelShowcase() {
   return (
     <div id="channels" className="space-y-24 py-16 md:py-24 border-t border-[#1E2024] bg-[#08090A]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-28">
+      <MarketingContainer className="space-y-28">
         {/* WhatsApp Automation Section */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left Text */}
@@ -224,7 +225,7 @@ export function ChannelShowcase() {
             </div>
           </div>
         </section>
-      </div>
+      </MarketingContainer>
     </div>
   );
 }
