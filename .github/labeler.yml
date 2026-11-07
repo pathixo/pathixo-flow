@@ -1,0 +1,59 @@
+# Pull-request path labeler (actions/labeler v5).
+#
+# Labels declared here are applied automatically from changed paths.
+# Exclusivity: labels in the "area" and "milestone" families are enforced as
+# exclusive by .github/workflows/labeler.yml, which finalizes results after
+# this config runs. The `milestone:*` labels are deliberately NOT mapped by
+# path; they are derived from the milestone of the issue referenced in the PR
+# body (Closes #N) by the same workflow, so reality decides, not paths.
+
+frontend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "apps/web/**"
+          - "packages/design-tokens/**"
+          - "packages/ui/**"
+
+backend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "apps/whatsapp-automation/**"
+          - "apps/email-automation/**"
+          - "packages/automation-contracts/**"
+          - "packages/configuration/**"
+          - "packages/queue/**"
+          - "packages/retry/**"
+          - "packages/billing-core/**"
+          - "packages/observability/**"
+          - "packages/testing/**"
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "docs/**"
+          - ".planning/**"
+          - "*.md"
+
+security:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/workflows/security.yml"
+          - ".github/workflows/security-firewall.yml"
+          - ".github/workflows/vulnerability-scan.yml"
+          - "SECURITY.md"
+
+marketing:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "apps/web/app/(marketing)/**"
+
+console:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "apps/web/app/(app)/**"
+          - "apps/web/app/(auth)/**"
