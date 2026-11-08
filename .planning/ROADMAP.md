@@ -1,50 +1,94 @@
 # Pathixo Flow - Project Roadmap
 
-This phased execution roadmap defines the transition from architecture decisions to a hardened, repeatable production automation platform.
+This phased execution roadmap defines the transition from architecture decisions to a hardened, repeatable production automation platform, organized by the canonical **M0–M5 Engineering Milestone Grouping**.
 
 ---
 
-## Phase Overview & Dependency Graph
+## Engineering Milestone Overview & Dependency Graph
 
 ```mermaid
 flowchart TD
-    P0["Phase 0: Technical Decisions (ADRs) & Monorepo Foundation"]
-    P1["Phase 1: Shared Reliability & Financial Metering Engine"]
-    P2["Phase 2: WhatsApp Automation Service (MVP)"]
-    P3["Phase 3: Email Automation Service (MVP)"]
-    P4["Phase 4: Client Delivery Hardening & Deployment Packs"]
-    P5["Phase 5: Cross-Channel Workflows & Operational Close"]
+    M0["Milestone M0: Platform Inception & Application Foundation"]
+    M1["Milestone M1: Shared Reliability & Financial Metering Engine"]
+    M2["Milestone M2: WhatsApp Automation Service (MVP)"]
+    M3["Milestone M3: Email Automation Service (MVP)"]
+    M4["Milestone M4: Client Delivery Hardening & Deployment Packs"]
+    M5["Milestone M5: Cross-Channel Workflows & Operational Close"]
 
-    P0 --> P1
-    P1 --> P2
-    P1 --> P3
-    P2 --> P4
-    P3 --> P4
-    P4 --> P5
+    M0 --> M1
+    M1 --> M2
+    M1 --> M3
+    M2 --> M4
+    M3 --> M4
+    M4 --> M5
 ```
 
 ---
 
-## Phase 0: Technical Decisions & Repository Foundation
+## Milestone M0: Platform Inception & Application Foundation (Current)
 
-**Goal**: Establish authoritative architectural decisions through ADRs and scaffold the monorepo baseline with zero cross-application coupling.
+**Goal**: Establish authoritative architectural decisions through ADRs, scaffold monorepo workspace tooling, configure dual-theme design tokens, build accessible Radix UI primitives, deliver the dark-themed marketing landing page with interactive preview simulator, and establish route shells.
 
+### Track M0.A: Technical Decisions, Governance & Repository Foundation
 * **Target Deliverables**:
   - `docs/decisions/ADR-001-runtime-and-monorepo.md`: Language & runtime choice (TypeScript/Node.js + `pnpm`).
-  - `docs/decisions/ADR-002-database-and-orm.md`: Persistence layer (PostgreSQL + Drizzle/Prisma).
+  - `docs/decisions/ADR-002-database-and-orm.md`: Persistence layer (PostgreSQL + Drizzle).
   - `docs/decisions/ADR-003-queue-and-workers.md`: Durable queue engine (Redis + BullMQ).
   - `docs/decisions/ADR-004-client-isolation.md`: Client credential isolation and configuration hierarchy.
   - `docs/decisions/ADR-005-providers.md`: WhatsApp (Meta Cloud API) and Email (Amazon SES / Resend) adapter strategy.
-  - Initial workspace configuration (`package.json`, `pnpm-workspace.yaml`, `tsconfig.json`).
-  - Strict CI linting, formatting, type checking, and Git hooks.
+  - Initial workspace configuration (`package.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`).
+  - Strict CI linting, formatting, type checking, security firewall, and Git hooks.
 * **Exit Criteria**:
-  - Both applications can be scaffolded and built independently.
-  - Shared package imports resolve cleanly across workspace boundaries.
-  - CI pipeline checks run on affected packages only.
+  - Monorepo tooling resolves cleanly across workspace boundaries.
+  - CI pipeline checks run on affected packages.
+
+### Track M0.B: Design System Primitives & Web Foundation (Phase 6)
+* **Target Deliverables**:
+  - `packages/design-tokens`: Centralized color tokens, 4px grid, 2px–6px radii, CSS variables (`tokens.css`), and Tailwind CSS v4 preset (`preset.ts`).
+  - `packages/ui`: Accessible Radix UI components (`Button`, `Badge`, `Card`, `Dialog`, `Drawer`, `Separator`, `Skeleton`, `Table`).
+  - `apps/web`: Next.js 15 App Router setup with global `app/layout.tsx` (Geist fonts) and `transpilePackages`.
+* **Requirements Mapped**: `ARCH-01`, `ARCH-02`, `ARCH-04`, `ARCH-05`, `DESIGN-01`, `DESIGN-02`, `DESIGN-03`, `DESIGN-04`
+
+### Track M0.C: Live Product Preview Simulator (Phase 7)
+* **Target Deliverables**:
+  - Interactive window shell modeling Pathixo Flow's 3-stage delivery pipeline (`apps/web/components/preview/`).
+  - Stage 1: Ingestion (Meta webhook HMAC-SHA256 verification pill, sub-20ms acknowledgement).
+  - Stage 2: Queue & Worker (BullMQ job status, Redis `SETNX` idempotency lock, retry policy).
+  - Stage 3: Financial Ledger (Attributed client billing row, category rate calculation, balance deduction).
+  - Firewall-safe mock data (`+15550100` RFC numbers, sanitized tokens).
+* **Requirements Mapped**: `PREVIEW-01`, `PREVIEW-02`, `PREVIEW-03`, `PREVIEW-04`
+
+### Track M0.D: Dark-Themed Marketing Landing Page (Phase 8)
+* **Target Deliverables**:
+  - Sticky editorial dark navigation bar (`marketing-header.tsx`) with wordmark, desktop links, CTA, and accessible mobile drawer.
+  - Editorial hero section with display headline ("Automate the work. Stay in control.") and interactive product preview peek.
+  - Core capabilities section highlighting 6 pillars (Communication, Workflow, Integration, Monitoring, Client Isolation, Financial Ledger).
+  - Channel showcases for WhatsApp and Email with interactive tabs and perspective styling.
+  - Visual workflow automation pipeline illustration (Trigger $\to$ Condition $\to$ Action $\to$ Ledger).
+  - Multi-column footer with sitemap, copyright, legal links, and status indicator.
+* **Requirements Mapped**: `LANDING-01` through `LANDING-08`
+
+### Track M0.E: Auth & Console Route Shells (Phase 9 - In Progress)
+* **Target Deliverables**:
+  - Route group segregation: `(marketing)` vs `(auth)` vs `(app)` with zero URL collisions (`ARCH-03`).
+  - Authentication shell: Centered distraction-free layout on warm neutral light canvas in `app/(auth)/layout.tsx`.
+  - Auth placeholder routes: `/login`, `/forgot-password`, `/reset-password`, `/verify-email`.
+  - Authenticated console shell: 240px collapsible sidebar, 48px header in `app/(app)/layout.tsx`.
+  - Console placeholder routes: `/workspace`, `/workspace/whatsapp`, `/workspace/email`, `/workspace/ledger`.
+  - Search engine protection: `robots: { index: false, follow: false }` metadata guard on private route groups.
+* **Requirements Mapped**: `ARCH-03`, `SHELL-01`, `SHELL-02`, `SHELL-03`, `SHELL-04`, `SHELL-05`
+
+### Track M0.F: Validation, Quality Gates & Documentation (Phase 10)
+* **Target Deliverables**:
+  - Production build verification (`pnpm -r run build`).
+  - Strict typecheck (`pnpm -r run typecheck`) and lint (`pnpm -r run lint`) passing with zero errors.
+  - WCAG 2.2 AA contrast compliance verification ($\ge 4.5:1$ text contrast).
+  - Synchronized documentation reflecting exact codebase status.
+* **Requirements Mapped**: `QUAL-01` through `QUAL-05`
 
 ---
 
-## Phase 1: Shared Reliability Foundation & Financial Ledger Core
+## Milestone M1: Shared Reliability Foundation & Financial Ledger Core
 
 **Goal**: Build the reusable execution primitives, background job processing, and P0 financial usage metering before building channel logic.
 
@@ -64,7 +108,7 @@ flowchart TD
 
 ---
 
-## Phase 2: WhatsApp Automation Service (MVP)
+## Milestone M2: WhatsApp Automation Service (MVP)
 
 **Goal**: Deliver a production-ready, independently deployable WhatsApp automation service.
 
@@ -83,7 +127,7 @@ flowchart TD
 
 ---
 
-## Phase 3: Email Automation Service (MVP)
+## Milestone M3: Email Automation Service (MVP)
 
 **Goal**: Deliver a production-ready, independently deployable Email automation service.
 
@@ -101,7 +145,7 @@ flowchart TD
 
 ---
 
-## Phase 4: Client Delivery Hardening & Deployment Packs
+## Milestone M4: Client Delivery Hardening & Deployment Packs
 
 **Goal**: Package the platform into a repeatable, low-friction deployment toolkit for client engagements.
 
@@ -116,7 +160,7 @@ flowchart TD
 
 ---
 
-## Phase 5: Cross-Channel Workflows & Operational Close
+## Milestone M5: Cross-Channel Workflows & Operational Close
 
 **Goal**: Support unified multi-channel client sequences and establish financial reconciliation tooling.
 
@@ -128,128 +172,3 @@ flowchart TD
 * **Exit Criteria**:
   - Multi-channel workflow executes cleanly with shared correlation ID.
   - Monthly reconciliation report demonstrates $\le 2\%$ variance against provider billing.
-
----
-
-# Milestone v2.0: Application Foundation & Landing Page Implementation
-
-## Phase Overview & Dependency Graph (Milestone v2.0)
-
-```mermaid
-flowchart TD
-    P6["Phase 6: Monorepo Foundation & Design System Primitives"]
-    P7["Phase 7: Live Product Preview Simulator"]
-    P8["Phase 8: Dark-Themed Marketing Landing Page"]
-    P9["Phase 9: Auth & Console Route Shells"]
-    P10["Phase 10: Validation, Quality Gates & Documentation"]
-
-    P6 --> P7
-    P6 --> P8
-    P7 --> P8
-    P6 --> P9
-    P8 --> P10
-    P9 --> P10
-```
-
----
-
-## Phase 6: Monorepo Foundation & Design System Primitives
-
-**Goal**: Scaffold the root pnpm workspace, establish the Next.js 15 App Router application in `apps/web`, configure dual-theme design tokens, and build reusable Radix UI primitives.
-
-* **Target Deliverables**:
-  - Root `package.json` with recursive workspace scripts (`dev`, `build`, `lint`, `typecheck`).
-  - `pnpm-workspace.yaml` configuring `apps/*` and `packages/*`.
-  - `packages/design-tokens`: Centralized color tokens, 4px grid, 2px–6px radii, CSS variables (`tokens.css`), and Tailwind CSS v4 preset (`preset.ts`).
-  - `packages/ui`: Accessible Radix UI components (`Button`, `IconButton`, `Badge`, `StatusBadge`, `Dialog`, `Drawer`, `Card`, `Separator`, `Table`).
-  - `apps/web`: Next.js 15 App Router setup with single global `app/layout.tsx` (Geist Sans & Geist Mono) and `transpilePackages`.
-* **Requirements Mapped**: `ARCH-01`, `ARCH-02`, `ARCH-04`, `ARCH-05`, `DESIGN-01`, `DESIGN-02`, `DESIGN-03`, `DESIGN-04`
-* **Success Criteria**:
-  1. `pnpm install` resolves cleanly across workspace boundaries.
-  2. `packages/ui` components render with correct design tokens and pass TypeScript typechecking.
-  3. Anti-AI-slop invariants verified (no purple gradients, no glowing buttons, 4px geometry).
-
----
-
-## Phase 7: Live Product Preview Simulator
-
-**Goal**: Build an authentic, interactive, zero-raster-image product preview component modeling Pathixo Flow's 3-stage delivery pipeline using real React/SVG DOM elements.
-
-* **Target Deliverables**:
-  - Interactive window shell with realistic macOS/window titlebar and route context.
-  - 3-Stage Pipeline Visualization:
-    - Stage 1: Ingestion (Meta webhook HMAC-SHA256 signature verification pill, sub-20ms acknowledgement).
-    - Stage 2: Queue & Worker (BullMQ job status, Redis `SETNX` idempotency lock, retry policy).
-    - Stage 3: Financial Ledger (Attributed client billing row, category rate calculation, prepaid balance deduction).
-  - Firewall-safe mock data (`+15550100` phone numbers, sanitized demo tokens).
-  - Responsive scaling for desktop peek fold and mobile adaptation.
-* **Requirements Mapped**: `PREVIEW-01`, `PREVIEW-02`, `PREVIEW-03`, `PREVIEW-04`
-* **Success Criteria**:
-  1. Product preview renders crisply on high-DPI displays with zero raster images.
-  2. Interactive simulation controls demonstrate idempotency and ledger attribution.
-  3. No firewall violation triggered by mock data.
-
----
-
-## Phase 8: Dark-Themed Marketing Landing Page
-
-**Goal**: Implement the complete, production-quality public marketing landing page inspired by Linear's dark visual aesthetic.
-
-* **Target Deliverables**:
-  - Sticky editorial dark navigation bar (`apps/web/app/(marketing)/_components/marketing-header.tsx`) with wordmark, desktop links, CTA, and accessible Radix mobile drawer.
-  - High-impact editorial hero section with display headline ("Automate the work. Stay in control."), supporting description, dual CTAs, and integrated product preview peek.
-  - Core capabilities section highlighting 6 pillars (Communication, Workflow, Integration, Monitoring, Client Isolation, Financial Ledger).
-  - WhatsApp automation channel showcase (Meta Cloud API, approved templates, inbound ingestion, opt-out suppression).
-  - Email automation channel showcase (SES/Resend, template rendering, bounce/complaint visibility).
-  - Visual workflow automation pipeline illustration (Trigger $\to$ Condition $\to$ Action $\to$ Ledger).
-  - Integrations, use cases, and engineering reliability & security section.
-  - Multi-column footer with sitemap, copyright (Pathixo Pvt. Ltd.), legal links, and operational status pill.
-* **Requirements Mapped**: `LANDING-01`, `LANDING-02`, `LANDING-03`, `LANDING-04`, `LANDING-05`, `LANDING-06`, `LANDING-07`, `LANDING-08`
-* **Success Criteria**:
-  1. Complete landing page rendered in dark theme (`#08090A`) with high typographic contrast and restrained terracotta accents.
-  2. All navigation links and CTAs lead to working routes or accessible dialogs.
-  3. Zero placeholder lorem ipsum, fabricated metrics, or generic AI-slop graphics.
-
----
-
-## Phase 9: Auth & Console Route Shells
-
-**Goal**: Establish the routing and layout architecture for the authentication experience and the authenticated engineering console with clear separation of concerns.
-
-* **Target Deliverables**:
-  - Route group segregation: `(marketing)` vs `(auth)` vs `(app)` with zero URL collisions (`ARCH-03`).
-  - Authentication shell: Centered distraction-free layout on warm neutral canvas in `app/(auth)/layout.tsx`.
-  - Auth placeholder routes: `/login`, `/forgot-password`, `/reset-password`, `/verify-email`.
-  - Authenticated console shell: 240px collapsible sidebar, 48px header with breadcrumbs and command palette shortcut in `app/(app)/layout.tsx`.
-  - Console placeholder routes: `/workspace`, `/workspace/whatsapp`, `/workspace/email`, `/workspace/workflows`, `/workspace/ledger`, `/workspace/operations`, `/workspace/settings`.
-  - Search engine protection: `robots: { index: false, follow: false }` metadata guard on private route groups.
-* **Requirements Mapped**: `ARCH-03`, `SHELL-01`, `SHELL-02`, `SHELL-03`, `SHELL-04`, `SHELL-05`
-* **Success Criteria**:
-  1. Navigating from marketing to `/login` or `/workspace` transitions cleanly without page reloads.
-  2. Light theme (`#F7F7F4`) correctly applies to `(auth)` and `(app)` without theme bleeding from `(marketing)`.
-  3. No-index robots directives prevent search indexing of private shells.
-
----
-
-## Phase 10: Validation, Quality Gates & Documentation
-
-**Goal**: Execute comprehensive build verification, linting, typechecking, accessibility audits, and synchronize all project documentation.
-
-* **Target Deliverables**:
-  - Production build verification (`pnpm -r run build`).
-  - Strict typecheck (`pnpm -r run typecheck`) and lint (`pnpm -r run lint`) passing with zero errors.
-  - WCAG 2.2 AA contrast compliance verification ($\ge 4.5:1$ text contrast).
-  - Responsive audit across 1440px, 1024px, 768px, and 375px viewports.
-  - Synchronized documentation:
-    - `docs/ARCHITECTURE.md`: Monorepo structure, route groups, and package responsibilities.
-    - `docs/DESIGN.md`: Dark marketing theme tokens, updated component standards.
-    - `docs/RULES.md`: Coding conventions, component rules, and anti-AI-slop invariants.
-    - `docs/TASKS.md`: Updated task backlog for v2.0 completion and v2.1 roadmap.
-    - `docs/COMPONENTS.md`: Shared UI component inventory and usage guidelines.
-* **Requirements Mapped**: `QUAL-01`, `QUAL-02`, `QUAL-03`, `QUAL-04`, `QUAL-05`
-* **Success Criteria**:
-  1. All CI checks pass locally and in GitHub Actions.
-  2. Documentation accurately reflects the codebase without claiming unbuilt backend features exist.
-  3. Application runs locally and is production-ready for subsequent backend integration.
-
-
