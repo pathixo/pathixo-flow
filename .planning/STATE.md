@@ -10,7 +10,7 @@ Last activity: 2026-11-06 — Completed execution and verification of Phase 8
 ---
 
 ## Current Status
-- **Current Milestone**: v2.0 — Application Foundation & Landing Page
+- **Current Milestone**: M1 — Frontend Foundation and Internal Console (Phases 8–10)
 - **Current Phase**: Phase 8 Complete -> Ready for Phase 9 (Auth & Console Route Shells)
 - **Phase Status**: Phase 8 Verified (Production Build & Firewall Pass)
 - **Last Updated**: 2026-11-06
