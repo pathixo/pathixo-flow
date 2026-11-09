@@ -95,17 +95,19 @@ jobs:
             // Milestone sync from linked issues.
             // --------------------------------------------------------------
             const body = pr.body || '';
-            const linking = body.match(
-              /(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)[\s:]+#(\d+)/gi
-            );
-            if (!linking) {
+            const linking = [
+              ...body.matchAll(
+                /(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)[\s:]+#(\d+)/gi
+              ),
+            ];
+            if (linking.length === 0) {
               core.info('No closing-keyword references in PR body; milestone not auto-set.');
             }
 
             let titleToLabel = null;
             let milestoneNumber = null;
-            for (const ref of linking || []) {
-              const num = Number(ref[1]);
+            for (const match of linking) {
+              const num = Number(match[1]);
               try {
                 const { data: issue } = await github.rest.issues.get({
                   owner: context.repo.owner,

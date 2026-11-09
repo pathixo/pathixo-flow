@@ -10,7 +10,7 @@ import { FinalCta } from './_components/final-cta';
 export const metadata: Metadata = {
   title: 'Flow by Pathixo — Modern Automation Platform',
   description:
-    'A unified automation platform for managing WhatsApp, email, and intelligent workflows. Built to simplify how businesses connect, communicate, and operate.',
+    'Internal engineering platform and automation delivery toolkit for WhatsApp and email workflows. Scoped, configured, and operated by Pathixo engineers per client.',
 };
 
 export default function MarketingLandingPage() {
