@@ -25,7 +25,7 @@ export function MarketingFooter() {
             </Link>
 
             <p className="text-xs text-[#747780] leading-relaxed max-w-sm">
-              A unified automation platform for business communication and workflows.
+              Internal engineering platform and automation delivery toolkit operated by Pathixo Pvt. Ltd.
             </p>
 
             <div className="pt-4 text-xs text-[#747780]">

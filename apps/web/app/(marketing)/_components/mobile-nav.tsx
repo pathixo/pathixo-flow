@@ -17,12 +17,12 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Product', href: '#product' },
-  { label: 'Solutions', href: '#solutions' },
+  { label: 'Capabilities', href: '#capabilities' },
+  { label: 'Channels', href: '#channels' },
+  { label: 'Workflows', href: '#workflows' },
   { label: 'Integrations', href: '#integrations' },
-  { label: 'Resources', href: '#resources' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'How we work', href: '#reliability' },
+  { label: 'Contact', href: '#cta' },
 ];
 
 export function MobileNav() {
@@ -81,7 +81,7 @@ export function MobileNav() {
                 type="button"
                 className="w-full h-10 rounded-md bg-white text-black text-sm font-semibold flex items-center justify-center gap-2 hover:bg-neutral-200 transition-colors"
               >
-                Get started
+                Request an assessment
                 <ArrowRight className="h-4 w-4" />
               </button>
             </a>
