@@ -17,8 +17,8 @@ export function HeroSection() {
 
           {/* Supporting Copy */}
           <p className="text-base sm:text-lg text-[#A0A2A8] max-w-2xl leading-relaxed">
-            A unified automation platform for managing WhatsApp, email, and intelligent workflows.
-            Built to simplify how businesses connect, communicate, and operate.
+            Production-grade WhatsApp, email, and intelligent workflow automations. Delivered and
+            operated by Pathixo engineers per client, with usage and costs reported transparently.
           </p>
 
           {/* Dual Action Buttons (Left Aligned) */}
@@ -28,7 +28,7 @@ export function HeroSection() {
                 type="button"
                 className="w-full sm:w-auto h-11 px-6 rounded-lg bg-white text-black text-sm font-semibold flex items-center justify-center gap-2 hover:bg-neutral-200 transition-colors shadow-lg"
               >
-                Get started
+                Request an assessment
                 <ArrowRight className="h-4 w-4" />
               </button>
             </a>

@@ -74,7 +74,7 @@ The CI pipeline runs automated security firewalls on every branch and PR. Violat
 ### 3.2 Privacy Invariant — No Live Phone Numbers
 * **Strict Exclusion**: Never use real international phone numbers matching `\+91[6-9][0-9]{9}` in source, fixtures, mock previews, or documentation.
 * **Permitted Mock Range**: Always use RFC reserved test numbers:
-  - Format: `+1 (555) 019-XXXX` or `+15550100` through `+15550199`.
+  - Format: `+1 (202) 555-0100` through `+1 (202) 555-0199` (E.164: `+12025550100` through `+12025550199`).
 
 ### 3.3 Financial Metering Invariant — Decoupled Pricing
 * **Hardcoded Rates Prohibited**: Never hardcode Meta per-message rates (e.g. `0.8631` or `0.1150`) inside `apps/`.
@@ -150,11 +150,20 @@ pnpm --if-present run test
 pnpm run build
 
 # 5. Security & Privacy Regex Audit
-git grep -E "\+91[6-9][0-9]{9}" || true
-git grep -E "EAA[A-Za-z0-9]{30,}" || true
-git grep -E "re_[A-Za-z0-9]{24,}" || true
-git grep -E "AKIA[0-9A-Z]{16}" || true
-git grep -E "0\.8631|0\.1150" apps/ || true
+
+# 5a. Pre-staging audit (searches working tree and untracked files)
+git grep --untracked -E "\+91[6-9][0-9]{9}" || true
+git grep --untracked -E "EAA[A-Za-z0-9]{30,}" || true
+git grep --untracked -E "re_[A-Za-z0-9]{24,}" || true
+git grep --untracked -E "AKIA[0-9A-Z]{16}" || true
+git grep --untracked -E "0\.8631|0\.1150" apps/ || true
+
+# 5b. Commit-time audit (searches staged index contents)
+git grep --cached -E "\+91[6-9][0-9]{9}" || true
+git grep --cached -E "EAA[A-Za-z0-9]{30,}" || true
+git grep --cached -E "re_[A-Za-z0-9]{24,}" || true
+git grep --cached -E "AKIA[0-9A-Z]{16}" || true
+git grep --cached -E "0\.8631|0\.1150" apps/ || true
 ```
 
 ---
