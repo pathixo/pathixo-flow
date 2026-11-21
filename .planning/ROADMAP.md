@@ -1,31 +1,41 @@
 # Pathixo Flow - Project Roadmap
 
-This phased execution roadmap defines the transition from architecture decisions to a hardened, repeatable production automation platform.
+This phased execution roadmap defines the transition from architecture decisions to a hardened, repeatable production automation platform, aligned with our canonical **M0–M5 GitHub Engineering Milestones**.
 
 ---
 
-## Phase Overview & Dependency Graph
+## Engineering Milestone Mapping Overview
 
 ```mermaid
 flowchart TD
-    P0["Phase 0: Technical Decisions (ADRs) & Monorepo Foundation"]
-    P1["Phase 1: Shared Reliability & Financial Metering Engine"]
-    P2["Phase 2: WhatsApp Automation Service (MVP)"]
-    P3["Phase 3: Email Automation Service (MVP)"]
-    P4["Phase 4: Client Delivery Hardening & Deployment Packs"]
-    P5["Phase 5: Cross-Channel Workflows & Operational Close"]
+    M0["Milestone M0: Repository & Engineering Foundation (Phase 0)"]
+    M1["Milestone M1: Frontend Foundation & Internal Console (Phases 6–10)"]
+    M2["Milestone M2: Backend Foundation & Financial Core (Phase 1)"]
+    M3["Milestone M3: WhatsApp Automation MVP (Phase 2)"]
+    M4["Milestone M4: Email Automation MVP (Phase 3)"]
+    M5["Milestone M5: Operational Hardening & Internal Pilot (Phases 4 & 5)"]
 
-    P0 --> P1
-    P1 --> P2
-    P1 --> P3
-    P2 --> P4
-    P3 --> P4
-    P4 --> P5
+    M0 --> M1
+    M0 --> M2
+    M2 --> M3
+    M2 --> M4
+    M1 --> M5
+    M3 --> M5
+    M4 --> M5
 ```
+
+| GitHub Milestone | Milestone Title | ROADMAP Phases |
+| :---: | :--- | :---: |
+| **M0** | Repository and engineering foundation | Phase 0 |
+| **M1** | Frontend foundation and internal console | Phases 6, 7, 8, 9, 10 |
+| **M2** | Backend foundation and financial core | Phase 1 |
+| **M3** | WhatsApp automation MVP | Phase 2 |
+| **M4** | Email automation MVP | Phase 3 |
+| **M5** | Operational hardening and internal pilot | Phases 4 & 5 |
 
 ---
 
-## Phase 0: Technical Decisions & Repository Foundation
+## Phase 0: Technical Decisions & Repository Foundation (Milestone M0)
 
 **Goal**: Establish authoritative architectural decisions through ADRs and scaffold the monorepo baseline with zero cross-application coupling.
 
@@ -44,7 +54,7 @@ flowchart TD
 
 ---
 
-## Phase 1: Shared Reliability Foundation & Financial Ledger Core
+## Phase 1: Shared Reliability Foundation & Financial Ledger Core (Milestone M2)
 
 **Goal**: Build the reusable execution primitives, background job processing, and P0 financial usage metering before building channel logic.
 
@@ -64,7 +74,7 @@ flowchart TD
 
 ---
 
-## Phase 2: WhatsApp Automation Service (MVP)
+## Phase 2: WhatsApp Automation Service (MVP) (Milestone M3)
 
 **Goal**: Deliver a production-ready, independently deployable WhatsApp automation service.
 
@@ -83,7 +93,7 @@ flowchart TD
 
 ---
 
-## Phase 3: Email Automation Service (MVP)
+## Phase 3: Email Automation Service (MVP) (Milestone M4)
 
 **Goal**: Deliver a production-ready, independently deployable Email automation service.
 
@@ -101,7 +111,7 @@ flowchart TD
 
 ---
 
-## Phase 4: Client Delivery Hardening & Deployment Packs
+## Phase 4: Client Delivery Hardening & Deployment Packs (Milestone M5)
 
 **Goal**: Package the platform into a repeatable, low-friction deployment toolkit for client engagements.
 
@@ -116,7 +126,7 @@ flowchart TD
 
 ---
 
-## Phase 5: Cross-Channel Workflows & Operational Close
+## Phase 5: Cross-Channel Workflows & Operational Close (Milestone M5)
 
 **Goal**: Support unified multi-channel client sequences and establish financial reconciliation tooling.
 
@@ -131,9 +141,9 @@ flowchart TD
 
 ---
 
-# Milestone v2.0: Application Foundation & Landing Page Implementation
+# Milestone M1 (v2.0): Frontend Foundation & Internal Console
 
-## Phase Overview & Dependency Graph (Milestone v2.0)
+## Phase Overview & Dependency Graph (Milestone M1)
 
 ```mermaid
 flowchart TD
@@ -251,5 +261,3 @@ flowchart TD
   1. All CI checks pass locally and in GitHub Actions.
   2. Documentation accurately reflects the codebase without claiming unbuilt backend features exist.
   3. Application runs locally and is production-ready for subsequent backend integration.
-
-
