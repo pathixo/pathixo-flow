@@ -27,10 +27,39 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://flow.pathixo.com'),
   title: {
     template: '%s | Pathixo Flow',
-    default: 'Pathixo Flow — High-Reliability WhatsApp & Email Automation',
+    default: 'Flow by Pathixo — Modern Automation Platform',
   },
   description:
-    'Internal engineering platform and reusable automation delivery suite built for high-reliability WhatsApp and Email automations with P0 financial metering.',
+    'Internal engineering platform and automation delivery toolkit for WhatsApp and email workflows. Scoped, configured, and operated by Pathixo engineers per client.',
+  openGraph: {
+    title: 'Flow by Pathixo — Modern Automation Platform',
+    description:
+      'Internal engineering platform and automation delivery toolkit for WhatsApp and email workflows. Scoped, configured, and operated by Pathixo engineers per client.',
+    url: 'https://flow.pathixo.com',
+    siteName: 'Pathixo Flow',
+    locale: 'en_US',
+    type: 'website',
+    images: [
+      {
+        url: '/apple-touch-icon.png',
+        width: 180,
+        height: 180,
+        alt: 'Pathixo Flow brand mark',
+      },
+    ],
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({
