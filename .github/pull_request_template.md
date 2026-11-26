@@ -13,6 +13,9 @@ A clear, concise summary of the changes proposed in this pull request.
 
 ## Affected Components
 
+- [ ] `apps/web`
+- [ ] `packages/design-tokens`
+- [ ] `packages/ui`
 - [ ] `apps/whatsapp-automation`
 - [ ] `apps/email-automation`
 - [ ] `packages/automation-contracts`
@@ -23,6 +26,7 @@ A clear, concise summary of the changes proposed in this pull request.
 - [ ] `packages/observability`
 - [ ] `packages/testing`
 - [ ] `.github/workflows` / CI
+- [ ] `docs/` / Documentation & ADRs
 
 ## Traceability & Requirements Mapping
 
